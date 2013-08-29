@@ -9,7 +9,12 @@ endif
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
+if has("unix")
+	set rtp+=~/.vim/bundle/vundle/
+else
+	set rtp+=~/vimfiles/bundle/vundle/
+endif
+
 call vundle#rc()
 
 " let Vundle manage Vundle
@@ -43,6 +48,7 @@ set number              " always show linenumbers
 set shiftwidth=8
 set tabstop=8
 set laststatus=2
+set smartcase
 "set autochdir
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
@@ -80,7 +86,8 @@ if &t_Co > 2 || has("gui_running")
 
 endif
 
-set guifont=terminus\ 9
+set guifont=terminus\ 9,consolas:h9
+
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
