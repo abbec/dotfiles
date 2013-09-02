@@ -9,11 +9,9 @@ endif
 set nocompatible
 filetype off
 
-if has("unix")
-	set rtp+=~/.vim/bundle/vundle/
-else
-	set rtp+=~/vimfiles/bundle/vundle/
-endif
+set runtimepath^=~/.vim  "Use instead of "vimfiles" on windows
+
+set rtp+=~/.vim/bundle/vundle/
 
 call vundle#rc()
 
@@ -26,6 +24,8 @@ Bundle 'tpope/vim-rails.git'
 
 Bundle 'sjl/badwolf'
 Bundle 'Lokaltog/powerline'
+
+Bundle 'scrooloose/nerdtree'
 
 filetype plugin indent on
 
