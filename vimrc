@@ -43,18 +43,26 @@ if has("vms")
 else
 	set backup		" keep a backup file
 endif
+
+" Tab and editor settings
 set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-set number              " always show linenumbers
 set shiftwidth=8
 set tabstop=8
 set laststatus=2
+set wildmenu           " Turn on WiLd menu
+set hidden             " Change buffer - without saving
+set encoding=utf-8
+
+" Searching
+set incsearch		" do incremental searching
 set smartcase
+set wildignore+=*.o,*.obj,*.exe,*.so,*.dll,*.pyc,.svn,.hg,.bzr,.git
 
 " Visual stuff
 set showmatch " Show matching brackets
+set number " always show linenumbers
+set ruler " show the cursor position all the time
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
@@ -100,6 +108,11 @@ set guioptions-=e
 set noerrorbells
 set novisualbell
 set t_vb=
+
+" ---------------
+" Mouse
+" ---------------
+set mousehide  " Hide mouse after chars typed
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
