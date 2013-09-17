@@ -29,7 +29,7 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
 nnoremap <f2> :NERDTreeToggle<CR>
 
-Bundle 'kien/ctrlp'
+Bundle 'kien/ctrlp.vim'
 
 filetype plugin indent on
 
