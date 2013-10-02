@@ -71,7 +71,7 @@ set ruler " show the cursor position all the time
 map Q gq
 
 " Use ESC to turn off highlighting
-nnoremap <esc> :noh<return><esc>
+nnoremap <CR> :noh<CR><CR>
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
