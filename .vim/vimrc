@@ -23,8 +23,12 @@ Bundle 'tpope/vim-rails.git'
 
 Bundle 'sjl/badwolf'
 
+Bundle 'cakebaker/scss-syntax.vim'
+
 " Airline
 Bundle 'bling/vim-airline'
+
+Bundle 'scrooloose/syntastic'
 
 Bundle 'scrooloose/nerdtree'
 nnoremap <f2> :NERDTreeToggle<CR>
