@@ -71,11 +71,13 @@ set ruler " show the cursor position all the time
 map Q gq
 
 " Use ESC to turn off highlighting
-nnoremap <CR> :noh<CR><CR>
+nnoremap <CR> :noh<CR>
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
+
+:nnoremap <F5> :<C-U>make<CR>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -114,6 +116,8 @@ set t_vb=
 " ---------------
 set mousehide  " Hide mouse after chars typed
 
+highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
@@ -122,7 +126,7 @@ if has("autocmd")
 		au!
 
 		" For all text files set 'textwidth' to 78 characters.
-		autocmd FileType text setlocal textwidth=78
+		autocmd FileType text setlocal textwidth=80
 
 		" When editing a file, always jump to the last known cursor position.
 		" Don't do it when the position is invalid or when inside an event handler
@@ -136,6 +140,8 @@ if has("autocmd")
 
 	augroup END
 
+	" Show trailing whitepace and spaces before a tab:
+	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
 else
 
 	set autoindent		" always set autoindenting on
