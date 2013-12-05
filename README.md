@@ -1,4 +1,4 @@
-vimcfg
+dotfiles
 ======
 
-My personal vim conf
+Just a collection of my private configuration files.
