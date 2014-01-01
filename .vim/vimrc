@@ -36,7 +36,7 @@ Bundle 'bling/vim-airline'
 Bundle 'scrooloose/syntastic'
 
 Bundle 'scrooloose/nerdtree'
-nnoremap <f2> :NERDTreeToggle<CR>
+nnoremap <leader>x :NERDTreeToggle<CR>
 
 Bundle 'kien/ctrlp.vim'
 
