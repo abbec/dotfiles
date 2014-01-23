@@ -36,7 +36,7 @@ Bundle 'cakebaker/scss-syntax.vim'
 
 Bundle 'rking/ag.vim'
 let g:agprg="ag --nocolor --nogroup --column"
-nnoremap <f4> :Ag! "<C-R><C-W>"
+nnoremap <leader>f :Ag! "<C-R><C-W>"
 
 " Airline
 Bundle 'bling/vim-airline'
