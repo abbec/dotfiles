@@ -36,7 +36,7 @@ Bundle 'cakebaker/scss-syntax.vim'
 
 Bundle 'rking/ag.vim'
 let g:agprg="ag --nocolor --nogroup --column"
-nnoremap <leader>f :Ag! "<C-R><C-W>"
+nnoremap <leader>f :Ag! "<C-R><C-W>" 
 
 " Airline
 Bundle 'bling/vim-airline'
@@ -47,6 +47,8 @@ Bundle 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
 
 Bundle 'kien/ctrlp.vim'
+
+Bundle 'sjl/splice.vim'
 
 filetype plugin indent on
 
@@ -60,6 +62,9 @@ if has("vms")
 else
 	set backup		" keep a backup file
 endif
+
+set backupdir=~/vimtmp,.
+set directory=~/vimtmp,.
 
 " Tab and editor settings
 set history=50		" keep 50 lines of command line history
@@ -90,6 +95,9 @@ map Q gq
 
 " Use ESC to turn off highlighting
 nnoremap <leader>q :noh<CR>
+
+" Use space to get into command mode
+nnoremap <Space> :
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
