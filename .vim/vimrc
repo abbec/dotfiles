@@ -28,6 +28,8 @@ Bundle 'tpope/vim-markdown'
 
 Bundle 'kana/vim-altr'
 
+Bundle 'davidhalter/jedi-vim'
+
 " Themes
 Bundle 'sjl/badwolf'
 Bundle 'tomasr/molokai'
