@@ -1,0 +1,117 @@
+##################
+# General settings
+##################
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account which may speeds things even more up.
+set header_cache = ~/.cache/mutt
+
+# Specify where to save and/or look for postponed messages.
+set postponed = +[Gmail]/Drafts
+
+# Allow Mutt to open new imap connection automatically.
+unset imap_passive
+
+# Keep IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+# How often to check for new mail (time in seconds).
+set mail_check = 120
+
+set sort = threads
+set sort_aux = reverse-last-date-received
+
+set editor=vim
+
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Use space to toggle collapsing of threads
+bind index <space>  collapse-thread
+
+###########
+## Accounts
+############
+
+# nat0.se
+source "~/.mutt/accounts/nat0"
+folder-hook =nat0.se/ 'source ~/.mutt/accounts/nat0'
+
+# acervin.com
+source "~/.mutt/accounts/acervin"
+folder-hook =acervin.com/ 'source ~/.mutt/accounts/acervin'
+
+# Changing accounts
+macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/accounts/acervin<enter><change-folder>!<enter>'
+macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/accounts/nat0<enter><change-folder>!<enter>'
+
+# Common settings
+set spoolfile = +inbox
+set record = +sent
+set imap_check_subscribed
+
+##############################
+# Pager options
+#############################
+
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+# Key bindings
+bind pager k  previous-line
+bind pager j  next-line
+bind pager gg top
+bind pager G  bottom
+
+bind pager R  group-reply
+
+#############################
+# Sidebar 
+#############################
+set sidebar_delim   = '  │'
+set sidebar_visible = yes
+set sidebar_width   = 24
+
+set sidebar_sort = yes
+#set sidebar_shortpath = yes
+
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+
+bind index,pager <down>   sidebar-next
+bind index,pager <up>     sidebar-prev
+bind index,pager <right>  sidebar-open
+
+#############################
+# Compose
+############################
+
+set realname = "Albert Cervin"          # who am i?
+set envelope_from                    # which from?
+set sig_dashes                       # dashes before sig
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+set askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+unset mime_forward                   # forward attachments as part of body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode                   # decode when forwarding
+set attribution = "On %d, %n wrote:" # format of quoting header
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_quote                    # include message in forwards
+
+############################
+# Colors
+###########################
+
+# Palette for use with the Linux console.  Black background.
+source ~/.mutt/colors
