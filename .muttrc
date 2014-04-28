@@ -68,6 +68,8 @@ bind pager G  bottom
 
 bind pager R  group-reply
 
+bind index g imap-fetch-mail
+
 #############################
 # Sidebar 
 #############################
