@@ -1,0 +1,14 @@
+#include ".colors/erosion"
+
+URxvt.scrollBar: false
+URxvt.font: xft:terminus:size=9
+
+URxvt*loginShell: true
+
+URxvt.termName: rxvt-256color
+
+Xcursor.size: 16
+
+URxvt.perl-ext-common: default,matcher,selection-to-clipboard
+URxvt.url-launcher: /usr/local/bin/firefox
+URxvt.matcher.button: 1
