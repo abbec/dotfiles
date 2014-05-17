@@ -12,46 +12,48 @@ filetype off
 
 set runtimepath^=~/.vim  "Use instead of "vimfiles" on windows
 
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/bundle/Vundle.vim
 
-call vundle#rc()
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-eunuch'
-Bundle 'tpope/vim-markdown'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails.git'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-markdown'
 
-Bundle 'kana/vim-altr'
+Plugin 'kana/vim-altr'
 
-Bundle 'davidhalter/jedi-vim'
+Plugin 'davidhalter/jedi-vim'
 
 " Themes
-Bundle 'sjl/badwolf'
-Bundle 'tomasr/molokai'
+Plugin 'sjl/badwolf'
+Plugin 'tomasr/molokai'
+Plugin 'flazz/vim-colorschemes'
 
-Bundle 'cakebaker/scss-syntax.vim'
+Plugin 'cakebaker/scss-syntax.vim'
 
-Bundle 'rking/ag.vim'
+Plugin 'rking/ag.vim'
 let g:agprg="ag --nocolor --nogroup --column"
 nnoremap <leader>f :Ag! "<C-R><C-W>" 
 
 " Airline
-Bundle 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
 
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 
-Bundle 'sjl/splice.vim'
+Plugin 'sjl/splice.vim'
 
+call vundle#end()
 filetype plugin indent on
 
 set nowrap
