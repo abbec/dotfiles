@@ -39,7 +39,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 
 Plugin 'rking/ag.vim'
 let g:agprg="ag --nocolor --nogroup --column"
-nnoremap <leader>f :Ag! "<C-R><C-W>" 
+nnoremap <leader>f :Ag! "<C-R><C-W>"
 
 " Airline
 Plugin 'bling/vim-airline'
@@ -52,6 +52,8 @@ nnoremap <leader>x :NERDTreeToggle<CR>
 Plugin 'kien/ctrlp.vim'
 
 Plugin 'sjl/splice.vim'
+
+Plugin 'jmcantrell/vim-virtualenv'
 
 call vundle#end()
 filetype plugin indent on
