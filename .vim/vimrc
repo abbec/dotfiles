@@ -28,6 +28,8 @@ Plugin 'tpope/vim-markdown'
 
 Plugin 'kana/vim-altr'
 
+Plugin 'mustache/vim-mustache-handlebars'
+
 Plugin 'davidhalter/jedi-vim'
 
 " Themes
@@ -54,6 +56,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'sjl/splice.vim'
 
 Plugin 'jmcantrell/vim-virtualenv'
+
+Plugin 'kylef/apiblueprint.vim'
 
 call vundle#end()
 filetype plugin indent on
