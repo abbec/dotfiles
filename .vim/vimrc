@@ -52,12 +52,11 @@ Plugin 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
 
 Plugin 'kien/ctrlp.vim'
-
 Plugin 'sjl/splice.vim'
-
 Plugin 'jmcantrell/vim-virtualenv'
-
 Plugin 'kylef/apiblueprint.vim'
+Plugin 'mitsuhiko/vim-jinja'
+Plugin 'leafgarland/typescript-vim'
 
 call vundle#end()
 filetype plugin indent on
