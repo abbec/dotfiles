@@ -57,6 +57,7 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'kylef/apiblueprint.vim'
 Plugin 'mitsuhiko/vim-jinja'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'moll/vim-node'
 
 call vundle#end()
 filetype plugin indent on
