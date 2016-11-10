@@ -36,7 +36,8 @@ let g:agprg="ag --nocolor --nogroup --column"
 nnoremap <leader>f :Ag! "<C-R><C-W>"
 
 " Airline
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 Plug 'scrooloose/syntastic'
 

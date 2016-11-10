@@ -1,11 +1,15 @@
-#include ".colors/base16-default-dark"
+#include ".colors/base16-materia"
 
 URxvt.scrollBar: false
-URxvt.font: xft:terminus:size=9
+URxvt.font: xft:terminus:size=7
 
 URxvt*loginShell: true
 
 URxvt.termName: rxvt-256color
+!URxvt.borderLess: true
+URxvt.internalBorder: 2
+URxvt.externalBorder: 0
+
 
 Xcursor.size: 16
 
@@ -20,3 +24,7 @@ rofi.color-window: argb:cc002b37, #002b37, #003642
 rofi.color-normal: #002b37, #819396, #002b37, #003642, #819396
 rofi.color-active: #002b37, #008ed4, #002b37, #003642, #008ed4
 rofi.color-urgent: #002b37, #da4281, #002b37, #003642, #da4281
+rofi.fullscreen: true
+rofi.padding: 200
+rofi.hide-scrollbar: true
+rofi.font: terminus 8
