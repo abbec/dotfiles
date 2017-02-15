@@ -1,12 +1,15 @@
 #include ".colors/base16-materia"
 
 URxvt.scrollBar: false
-URxvt.font: xft:Fantasque Sans Mono:size=9,style=Regular
-URxvt.boldFont: xft:Fantasque Sans Mono:size=9,style=Bold
+URxvt.font: xft:Hasklig:size=8,style=Regular
+URxvt.boldFont: xft:Hasklig:size=8,style=Bold
 
-Xft.antialias:              true
-Xft.hinting:                true
-Xft.hintstyle:              hintslight
+Xft.autohint: 0
+Xft.lcdfilter: lcddefault
+Xft.hintstyle: hintslight
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
 
 URxvt*loginShell: true
 

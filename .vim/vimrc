@@ -40,6 +40,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'scrooloose/syntastic'
+let g:syntastic_python_checkers = ['pylint', 'pycodestyle']
 
 Plug 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
@@ -48,9 +49,11 @@ Plug 'kien/ctrlp.vim'
 
 Plug 'sjl/splice.vim'
 
+Plug 'rust-lang/rust.vim'
+
 if has("python")
 	Plug 'OmniSharp/omnisharp-vim'
-	let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
+	let g:syntastic_cs_checkers = ['code_checker']
 	set completeopt=longest,menuone,preview
 	set noshowmatch
 	let g:OmniSharp_timeout = 1
