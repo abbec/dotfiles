@@ -50,6 +50,7 @@ Plug 'kien/ctrlp.vim'
 Plug 'sjl/splice.vim'
 
 Plug 'rust-lang/rust.vim'
+let g:syntastic_rust_checkers = ['rustc']
 
 if has("python")
 	Plug 'OmniSharp/omnisharp-vim'
@@ -105,6 +106,11 @@ set ruler " show the cursor position all the time
 
 " For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
 " let &guioptions = substitute(&guioptions, "t", "", "g")
+
+" autoreload files changed outside of vim
+" check one time after 4s of inactivity in normal mode
+set autoread                                                                                                                                                                                    
+au CursorHold * checktime 
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
