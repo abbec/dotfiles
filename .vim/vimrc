@@ -18,12 +18,14 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-sleuth'
 
 Plug 'kana/vim-altr'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidhalter/jedi-vim'
 
 Plug 'pangloss/vim-javascript'
+Plug 'airblade/vim-gitgutter'
 
 " Themes
 Plug 'flazz/vim-colorschemes'
