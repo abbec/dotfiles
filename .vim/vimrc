@@ -26,6 +26,10 @@ Plug 'davidhalter/jedi-vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
+Plug 'yggdroot/indentline'
+
+let g:indentLine_enabled = 0
+let g:indentLine_leadingSpaceEnabled = 1
 
 " Themes
 Plug 'flazz/vim-colorschemes'
