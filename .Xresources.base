@@ -3,13 +3,15 @@
 URxvt.scrollBar: false
 URxvt.font: xft:Hasklig:size=8,style=Regular
 URxvt.boldFont: xft:Hasklig:size=8,style=Bold
+!URxvt.letterSpace: -1
 
 Xft.autohint: 0
 Xft.lcdfilter: lcddefault
-Xft.hintstyle: hintslight
+Xft.hintstyle: hintfull
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
+Xft.dpi: 96
 
 URxvt*loginShell: true
 
@@ -17,7 +19,6 @@ URxvt.termName: rxvt-256color
 !URxvt.borderLess: true
 URxvt.internalBorder: 2
 URxvt.externalBorder: 0
-
 
 Xcursor.size: 16
 
