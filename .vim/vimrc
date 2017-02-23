@@ -18,7 +18,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-sleuth'
 
 Plug 'kana/vim-altr'
 Plug 'mustache/vim-mustache-handlebars'
@@ -26,20 +25,12 @@ Plug 'davidhalter/jedi-vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'airblade/vim-gitgutter'
-Plug 'yggdroot/indentline'
-
-let g:indentLine_enabled = 0
-let g:indentLine_leadingSpaceEnabled = 1
 
 " Themes
 Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 
 Plug 'cakebaker/scss-syntax.vim'
-
-Plug 'rking/ag.vim'
-let g:agprg="ag --nocolor --nogroup --column"
-nnoremap <leader>f :Ag! "<C-R><C-W>"
 
 " Airline
 Plug 'vim-airline/vim-airline'
@@ -53,9 +44,14 @@ let g:syntastic_cs_checkers = ['code_checker']
 Plug 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
 
-Plug 'kien/ctrlp.vim'
 Plug 'sjl/splice.vim'
 Plug 'rust-lang/rust.vim'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Mapping selecting mappings
+nnoremap <c-p> :Files<cr>
 
 if has("python")
 	Plug 'OmniSharp/omnisharp-vim'
