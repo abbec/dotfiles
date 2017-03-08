@@ -11,5 +11,6 @@
 	bD  = branch -D      # Force delete a branch
 	dc  = diff --cached  # Display the staged changes
 	bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d"
+	st = status -sb
 [core]
 	editor = vim
