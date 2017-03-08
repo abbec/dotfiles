@@ -52,6 +52,7 @@ Plug 'junegunn/fzf.vim'
 
 " Mapping selecting mappings
 nnoremap <c-p> :Files<cr>
+nnoremap <c-g> :GFiles<cr>
 
 if has("python")
 	Plug 'OmniSharp/omnisharp-vim'
@@ -111,6 +112,10 @@ set ruler " show the cursor position all the time
 set autoread
 au CursorHold * checktime
 
+set listchars=space:·,tab:→\ 
+set list
+nmap <leader>l :set list!<CR>
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -159,10 +164,6 @@ inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>
 inoremap  <Right>  <NOP>
-noremap   <Up>     <NOP>
-noremap   <Down>   <NOP>
-noremap   <Left>   <NOP>
-noremap   <Right>  <NOP>
 
 " ---------------
 " Sounds
@@ -177,7 +178,6 @@ set t_vb=
 set mousehide  " Hide mouse after chars typed
 
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")

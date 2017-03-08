@@ -34,7 +34,7 @@ rofi.width: 60
 rofi.padding: 15
 rofi.hide-scrollbar: true
 rofi.color-enabled: true
-rofi.color-window: argb:cc273238, #273238, #1e2529
+rofi.color-window: argb:ee273238, #273238, #1e2529
 rofi.color-normal: #273238, #c1c1c1, argb:aa273238, argb:aa394249, #cccccc
 rofi.color-active: #273238, #80cbc4, #273238, #394249, #80cbc4
 rofi.color-urgent: #273238, #ff1844, #273238, #394249, #ff1844
