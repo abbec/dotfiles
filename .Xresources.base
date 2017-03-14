@@ -1,4 +1,4 @@
-#include ".colors/base16-materia"
+#include ".colors/nord"
 
 URxvt.scrollBar: false
 URxvt.font: xft:Hasklig:size=8,style=Regular

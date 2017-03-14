@@ -29,6 +29,7 @@ Plug 'airblade/vim-gitgutter'
 " Themes
 Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
+Plug 'arcticicestudio/nord-vim'
 
 Plug 'cakebaker/scss-syntax.vim'
 
@@ -71,6 +72,9 @@ call plug#end()
 filetype plugin indent on
 
 set nowrap
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+nnoremap <leader>f :Find <c-r><c-w><cr>
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -143,14 +147,12 @@ if &t_Co > 2 || has("gui_running")
 	syntax on
 	set hlsearch
 
-	set background=dark
-	if filereadable(expand("~/.vimrc_background"))
-		let base16colorspace=256
-		source ~/.vimrc_background
-	endif
+	"set background=dark
+	colorscheme nord
+
 endif
 
-set guifont=terminus\ 9,bitstream\ vera\ sans\ mono:h8,consolas:h9
+set guifont=Source\ Code\ Pro\ 9
 
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
