@@ -10,7 +10,7 @@ let mapleader = ","
 set nocompatible
 filetype off
 
-set runtimepath^=~/.vim  "Use instead of "vimfiles" on windows
+set runtimepath^=~/.vim  "Use instead of 'vimfiles' on windows
 
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
@@ -152,7 +152,7 @@ if &t_Co > 2 || has("gui_running")
 
 endif
 
-set guifont=Source\ Code\ Pro\ 9
+set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
 
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
