@@ -51,6 +51,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'suan/vim-instant-markdown'
+
 " Mapping selecting mappings
 nnoremap <c-p> :Files<cr>
 nnoremap <c-g> :GFiles<cr>
@@ -73,8 +75,8 @@ filetype plugin indent on
 
 set nowrap
 
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
-nnoremap <leader>f :Find <c-r><c-w><cr>
+command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
+nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
