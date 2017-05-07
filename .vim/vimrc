@@ -42,6 +42,9 @@ let g:syntastic_python_checkers = ['pylint', 'pycodestyle']
 let g:syntastic_rust_checkers = ['rustc']
 let g:syntastic_cs_checkers = ['code_checker']
 
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+let g:syntastic_javascript_checkers = ['eslint']
+
 Plug 'scrooloose/nerdtree'
 nnoremap <leader>x :NERDTreeToggle<CR>
 
