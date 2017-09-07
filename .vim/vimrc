@@ -24,12 +24,15 @@ Plug 'mustache/vim-mustache-handlebars'
 Plug 'davidhalter/jedi-vim'
 
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
 Plug 'airblade/vim-gitgutter'
 
 " Themes
 Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'dracula/vim'
 
 Plug 'cakebaker/scss-syntax.vim'
 
@@ -147,8 +150,10 @@ if &t_Co > 2 || has("gui_running")
 	set hlsearch
 
 	"set background=dark
-	colorscheme nord
-
+	colorscheme dracula
+	hi SpecialKey cterm=NONE ctermfg=darkgray ctermbg=NONE
+	hi NonText ctermfg=darkgray
+	hi VertSplit ctermfg=darkgray ctermbg=NONE
 endif
 
 set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
