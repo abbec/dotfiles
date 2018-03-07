@@ -69,6 +69,12 @@ if filereadable($HOME . "/.vim-site-plugins.vimrc")
 	source ~/.vim-site-plugins.vimrc
 endif
 
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'Quramy/tsuquyomi'
+
+Plug 'tpope/vim-sleuth'
+
 call plug#end()
 
 filetype plugin indent on
@@ -77,6 +83,7 @@ set nowrap
 
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
+nnoremap <leader>F :FindInFiles<space>
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -116,7 +123,12 @@ set ruler " show the cursor position all the time
 
 " check one time after 4s of inactivity in normal mode
 set autoread
-au FocusGained,BufEnter * :checktime
+" au FocusGained,BufEnter * :checktime
+func! MyHandler(timer)
+	:checktime
+endfunc
+let timer = timer_start(2000, 'MyHandler', {'repeat': -1})
+
 
 set listchars=space:·,tab:→\ 
 set list
@@ -154,6 +166,11 @@ if &t_Co > 2 || has("gui_running")
 	hi SpecialKey cterm=NONE ctermfg=darkgray ctermbg=NONE
 	hi NonText ctermfg=darkgray
 	hi VertSplit ctermfg=darkgray ctermbg=NONE
+
+	hi ALEError cterm=underline ctermfg=red
+	hi ALEErrorSign cterm=underline ctermfg=red
+	hi ALEWarning cterm=underline ctermfg=yellow
+	hi ALEWarningSign cterm=underline ctermfg=yellow
 endif
 
 set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
@@ -170,6 +187,9 @@ inoremap  <Up>     <NOP>
 inoremap  <Down>   <NOP>
 inoremap  <Left>   <NOP>
 inoremap  <Right>  <NOP>
+
+nnoremap <leader>2 :diffget //2<CR>
+nnoremap <leader>3 :diffget //3<CR>
 
 " ---------------
 " Sounds
@@ -209,6 +229,11 @@ if has("autocmd")
 
 	" Show trailing whitepace and spaces before a tab:
 	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
+
+	augroup typescript
+		autocmd!
+		autocmd FileType typescript inoremap <buffer> . .<C-x><C-o>
+	augroup END
 
 	augroup omnisharp_commands
 		autocmd!
