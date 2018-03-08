@@ -12,5 +12,8 @@
 	dc  = diff --cached  # Display the staged changes
 	bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d"
 	st = status -sb
+
+	serve = !git daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose
+	hub = !git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose
 [core]
 	editor = vim
