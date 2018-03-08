@@ -137,11 +137,11 @@ nmap <leader>l :set list!<CR>
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
-" Use ESC to turn off highlighting
+" Use <leader>q to turn off highlighting
 nnoremap <leader>q :noh<CR>
 
 " Use space to get into command mode
-nnoremap <Space> :
+noremap <Space> :
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
