@@ -47,6 +47,7 @@ nnoremap <leader>x :NERDTreeToggle<CR>
 
 Plug 'sjl/splice.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -80,6 +81,10 @@ call plug#end()
 filetype plugin indent on
 
 set nowrap
+
+" ale linters
+let g:ale_linters = {'rust': ['cargo']}
+let g:ale_rust_rls_toolchain = 'stable'
 
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
@@ -153,6 +158,7 @@ nmap <leader>p <Plug>(altr-back)
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
 	set mouse=a
+	set ttymouse=sgr
 endif
 
 " Switch syntax highlighting on, when the terminal has colors
@@ -163,14 +169,7 @@ if &t_Co > 2 || has("gui_running")
 
 	"set background=dark
 	colorscheme dracula
-	hi SpecialKey cterm=NONE ctermfg=darkgray ctermbg=NONE
-	hi NonText ctermfg=darkgray
-	hi VertSplit ctermfg=darkgray ctermbg=NONE
-
-	hi ALEError cterm=underline ctermfg=red
-	hi ALEErrorSign cterm=underline ctermfg=red
-	hi ALEWarning cterm=underline ctermfg=yellow
-	hi ALEWarningSign cterm=underline ctermfg=yellow
+	set termguicolors
 endif
 
 set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
