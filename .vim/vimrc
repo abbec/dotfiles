@@ -13,7 +13,12 @@ filetype off
 set runtimepath^=~/.vim  "Use instead of 'vimfiles' on windows
 
 call plug#begin('~/.vim/plugged')
+
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
+let g:fugitive_gitlab_domains = ['https://git.frostbite.com/']
+nmap <leader>g :Gstatus<CR>
+
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -48,6 +53,11 @@ nnoremap <leader>x :NERDTreeToggle<CR>
 Plug 'sjl/splice.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
+set hidden
+let g:racer_experimental_completer = 1
+let g:rustfmt_command = 'cargo +nightly fmt -- '
+let g:rustfmt_autosave = 1
+let g:rust_fold = 1
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -60,7 +70,6 @@ nnoremap <c-g> :GFiles<cr>
 
 if has("python")
 	Plug 'OmniSharp/omnisharp-vim'
-	set completeopt=longest,menuone,preview
 	set noshowmatch
 	let g:OmniSharp_timeout = 1
 endif
@@ -81,6 +90,7 @@ call plug#end()
 filetype plugin indent on
 
 set nowrap
+set textwidth=100
 
 " ale linters
 let g:ale_linters = {'rust': ['cargo']}
@@ -92,6 +102,8 @@ nnoremap <leader>F :FindInFiles<space>
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
+
+set completeopt=longest,menuone,preview
 
 if has("vms")
 	set nobackup		" do not keep a backup file, use versions instead
@@ -203,6 +215,8 @@ set t_vb=
 set mousehide  " Hide mouse after chars typed
 
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
+hi SpellCap gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightyellow ctermfg=yellow
+hi SpellBad gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightred ctermfg=red
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -228,11 +242,6 @@ if has("autocmd")
 
 	" Show trailing whitepace and spaces before a tab:
 	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
-
-	augroup typescript
-		autocmd!
-		autocmd FileType typescript inoremap <buffer> . .<C-x><C-o>
-	augroup END
 
 	augroup omnisharp_commands
 		autocmd!
@@ -267,6 +276,15 @@ if has("autocmd")
 
 		autocmd FileType cs set updatetime=1000
 
+	augroup END
+
+	augroup rust
+		autocmd!
+
+		au FileType rust nmap gd <Plug>(rust-def)
+		au FileType rust nmap gs <Plug>(rust-def-split)
+		au FileType rust nmap gx <Plug>(rust-def-vertical)
+		au FileType rust nmap <leader>gd <Plug>(rust-doc)
 	augroup END
 else
 
