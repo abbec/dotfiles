@@ -37,7 +37,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 Plug 'arcticicestudio/nord-vim'
-Plug 'dracula/vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 Plug 'cakebaker/scss-syntax.vim'
 
@@ -83,7 +83,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'Quramy/tsuquyomi'
 
-Plug 'tpope/vim-sleuth'
+Plug 'junegunn/vim-emoji'
+set completefunc=emoji#complete
 
 call plug#end()
 
