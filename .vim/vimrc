@@ -19,72 +19,46 @@ Plug 'shumphrey/fugitive-gitlab.vim'
 let g:fugitive_gitlab_domains = ['https://git.frostbite.com/']
 nmap <leader>g :Gstatus<CR>
 
-Plug 'tpope/vim-rails'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-markdown'
 
-Plug 'kana/vim-altr'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'davidhalter/jedi-vim'
 
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-let g:jsx_ext_required = 0
-Plug 'airblade/vim-gitgutter'
-
-" Themes
-Plug 'flazz/vim-colorschemes'
-Plug 'chriskempson/base16-vim'
-Plug 'arcticicestudio/nord-vim'
+" themes
 Plug 'dracula/vim', { 'as': 'dracula' }
 
-Plug 'cakebaker/scss-syntax.vim'
-
-" Airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
+" code checking
 Plug 'w0rp/ale'
 
-Plug 'scrooloose/nerdtree'
-nnoremap <leader>x :NERDTreeToggle<CR>
+" syntaxes
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'tpope/vim-markdown'
+let g:jsx_ext_required = 0
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
-Plug 'sjl/splice.vim'
+" languages
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 set hidden
 let g:racer_experimental_completer = 1
-let g:rustfmt_command = 'cargo +nightly fmt -- '
+let g:rustfmt_command = "cargo +nightly fmt -- "
 let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
 let g:rust_fold = 1
+Plug 'Quramy/tsuquyomi'
+Plug 'davidhalter/jedi-vim'
 
+" find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-
-Plug 'suan/vim-instant-markdown'
 
 " Mapping selecting mappings
 nnoremap <c-p> :Files<cr>
 nnoremap <c-g> :GFiles<cr>
-
-if has("python")
-	Plug 'OmniSharp/omnisharp-vim'
-	set noshowmatch
-	let g:OmniSharp_timeout = 1
-endif
-
-Plug 'jmcantrell/vim-virtualenv'
 if filereadable($HOME . "/.vim-site-plugins.vimrc")
 	source ~/.vim-site-plugins.vimrc
 endif
-
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'Quramy/tsuquyomi'
-
-Plug 'junegunn/vim-emoji'
-set completefunc=emoji#complete
 
 call plug#end()
 
@@ -95,7 +69,10 @@ set textwidth=100
 
 " ale linters
 let g:ale_linters = {'rust': ['cargo']}
+let g:ale_rust_cargo_check_tests = 1
+let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_rust_rls_toolchain = 'stable'
+" let g:ale_open_list = 0
 
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
@@ -215,9 +192,25 @@ set t_vb=
 " ---------------
 set mousehide  " Hide mouse after chars typed
 
+" statusline
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=🌵\ %{FugitiveHead(8)}
+set statusline+=%#Title#
+set statusline+=\ 📝\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=📣\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=[%{&fileformat}\]
+set statusline+=\ 📏\ %l(%L)
+
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 hi SpellCap gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightyellow ctermfg=yellow
 hi SpellBad gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightred ctermfg=red
+
+hi SpecialKey guifg=gray40 ctermfg=gray
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -244,41 +237,6 @@ if has("autocmd")
 	" Show trailing whitepace and spaces before a tab:
 	autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/ containedin=ALL
 
-	augroup omnisharp_commands
-		autocmd!
-
-		" use correct complete func
-		autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-
-		" automatic syntax check on save
-		autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-
-		" display type info on idle
-		autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-
-		" hotkeys
-		autocmd FileType cs nnoremap <leader>gd :OmniSharpGotoDefinition<cr>
-		autocmd FileType cs nnoremap <leader>fi :OmniSharpFindImplementations<cr>
-		autocmd FileType cs nnoremap <leader>ft :OmniSharpFindType<cr>
-		autocmd FileType cs nnoremap <leader>fs :OmniSharpFindSymbol<cr>
-		autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
-
-		" find members in current buffer
-		autocmd FileType cs nnoremap <leader>fm :OmniSharpFindMembers<cr>
-
-		" fix issues (cursor on line)
-		autocmd FileType cs nnoremap <leader>x :OmniSharpFixIssue<cr>
-		autocmd FileType cs nnoremap <leader>fx :OmniSharpFixUsings<cr>
-		autocmd FileType cs nnoremap <leader>tt :OmniSharpTypeLookup<cr>
-		autocmd FileType cs nnoremap <leader>dc :OmniSharpDocumentation<cr>
-
-		autocmd FileType cs nnoremap <C-K> :OmniSharpNavigateUp<cr>
-		autocmd FileType cs nnoremap <C-J> :OmniSharpNavigateDown<cr>
-
-		autocmd FileType cs set updatetime=1000
-
-	augroup END
-
 	augroup rust
 		autocmd!
 
@@ -292,11 +250,3 @@ else
 	set autoindent		" always set autoindenting on
 
 endif " has("autocmd")
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-				\ | wincmd p | diffthis
-endif
