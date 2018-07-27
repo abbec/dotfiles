@@ -21,12 +21,14 @@ nmap <leader>g :Gstatus<CR>
 
 Plug 'tpope/vim-dispatch'
 
-
 " themes
 Plug 'dracula/vim', { 'as': 'dracula' }
 
 " code checking
 Plug 'w0rp/ale'
+
+" important 💩
+Plug 'kyuhi/vim-emoji-complete'
 
 " syntaxes
 Plug 'cakebaker/scss-syntax.vim'
@@ -40,14 +42,16 @@ Plug 'peitalin/vim-jsx-typescript'
 " languages
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
-set hidden
 let g:racer_experimental_completer = 1
-let g:rustfmt_command = "cargo +nightly fmt -- "
+let g:rustfmt_command = "~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustfmt"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rust_fold = 1
 Plug 'Quramy/tsuquyomi'
 Plug 'davidhalter/jedi-vim'
+Plug 'elmcast/elm-vim'
+let g:elm_format_autosave = 1
+let g:elm_format_fail_silently = 0
 
 " find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -66,6 +70,7 @@ filetype plugin indent on
 
 set nowrap
 set textwidth=100
+set hidden
 
 " ale linters
 let g:ale_linters = {'rust': ['cargo']}
@@ -81,6 +86,7 @@ nnoremap <leader>F :FindInFiles<space>
 set completeopt=longest,menuone,preview
 
 " put all backups in a separate dir
+set backupcopy=yes
 set backupdir=~/vimtmp,.
 set directory=~/vimtmp,.
 
