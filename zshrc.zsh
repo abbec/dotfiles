@@ -7,7 +7,6 @@ setopt COMPLETE_ALIASES
 
 source ~/.zplug/init.zsh
 
-zplug "zsh-users/zsh-autosuggestions"
 zplug "arzzen/calc.plugin.zsh"
 zplug "abbec/emoji-cli"
 EMOJI_CLI_FILTER=fzf
