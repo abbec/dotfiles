@@ -3,7 +3,6 @@ compinit
 
 # allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
-setopt COMPLETE_ALIASES
 
 source ~/.zplug/init.zsh
 
@@ -47,5 +46,9 @@ bindkey '^[[B' down-line-or-search
 # use rg for fzf
 export FZF_DEFAULT_COMMAND='rg --files'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# aliases
+alias gp=gpg2
+alias l='ls -lah'
 
 zplug load
