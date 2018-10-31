@@ -43,7 +43,6 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 let g:racer_experimental_completer = 1
-let g:rustfmt_command = "~/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustfmt"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rust_fold = 1
@@ -98,6 +97,9 @@ set completeopt=longest,menuone,preview
 set backupcopy=yes
 set backupdir=~/vimtmp,.
 set directory=~/vimtmp,.
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
 
 " Tab and editor settings
 set history=50		" keep 50 lines of command line history
