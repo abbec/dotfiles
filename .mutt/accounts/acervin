@@ -1,17 +1,25 @@
 # IMAP
 
+unmailboxes *
+unset imap_check_subscribed
+unset imap_list_subscribed
+
 set imap_user = albert@acervin.com
-set folder = imaps://albert@acervin.com@imap.googlemail.com/
+set imap_pass = $my_acervin_pass
+set folder = imaps://$imap_user@imap.googlemail.com/
 set imap_check_subscribed
+set imap_list_subscribed
+
+# Specify where to save and/or look for postponed messages.
+set spoolfile = +inbox
+set postponed = +[Gmail]/Drafts
+set trash = +[Gmail]/Trash
 
 #SMTP
-
-set smtp_url=smtps://$imap_user@smtp.googlemail.com
+set smtp_url=smtps://$imap_user:$my_acervin_pass@smtp.googlemail.com/
 set from = albert@acervin.com
 unset record
 
 # Connection options
 set ssl_force_tls = yes
 unset ssl_starttls
-
-account-hook imaps://albert@acervin.com@imap.googlemail.com/ 'set imap_user=albert@acervin.com'

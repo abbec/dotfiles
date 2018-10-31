@@ -38,8 +38,12 @@ bindkey -e
 bindkey "^[[3~" delete-char
 
 # arrow to search
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -50,5 +54,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # aliases
 alias gp=gpg2
 alias l='ls -lah'
+
+function bwd() {
+	echo ${$(pwd):gs/\//🥖/}
+}
 
 zplug load

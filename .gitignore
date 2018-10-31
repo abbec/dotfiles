@@ -1,4 +1,9 @@
 .vim/bundle
 .vim/plugged
+.vim/view
+.vim/.netrwhist
 .vim/autoload/plug.vim*
+.mutt/aliases
+.mutt/mailboxes
+.mutt/gpg.rc
 *~
