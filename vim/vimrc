@@ -22,7 +22,7 @@ nmap <leader>g :Gstatus<CR>
 Plug 'tpope/vim-dispatch'
 
 " themes
-Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'chriskempson/base16-vim'
 
 " code checking
 Plug 'w0rp/ale'
@@ -148,8 +148,10 @@ if &t_Co > 2 || has("gui_running")
 	syntax on
 	set hlsearch
 
-	colorscheme dracula
-	set termguicolors
+	if filereadable(expand("~/.vimrc_background"))
+		let base16colorspace=256
+		source ~/.vimrc_background
+	endif
 endif
 
 set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
@@ -184,7 +186,7 @@ set mousehide  " Hide mouse after chars typed
 
 " statusline
 set statusline=
-set statusline+=%#PmenuSel#
+set statusline+=%#CursorColumn#
 set statusline+=🌵\ %{FugitiveHead(8)}
 set statusline+=%#Title#
 set statusline+=\ 📝\ %f
@@ -198,9 +200,11 @@ set statusline+=\ 📏\ %l(%L)
 
 highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
 
-" Customize ALE colors
+" Customize spelling colors
 hi SpellCap gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightyellow ctermfg=yellow
 hi SpellBad gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightred ctermfg=red
+hi SpellRare gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightgreen ctermfg=green
+hi SpellLocal gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightgreen ctermfg=green
 
 " whitespace syntax color
 hi SpecialKey guifg=gray40 ctermfg=gray
@@ -221,4 +225,4 @@ if has("autocmd")
 		autocmd BufWritePre *.elm call FormatElmAlt()
 	augroup END
 endif " has("autocmd")
-set autoindent		" always set autoindenting on
+set autoindent " always set autoindenting on

@@ -11,6 +11,8 @@ zplug "abbec/emoji-cli"
 EMOJI_CLI_FILTER=fzf
 EMOJI_CLI_KEYBIND=^X^E
 zplug "akoenig/npm-run.plugin.zsh"
+zplug "chriskempson/base16-shell", use:"scripts/base16-gruvbox-light-soft.sh"
+zplug "chriskempson/base16-shell", use:"base16-shell.plugin.zsh"
 zplug "dracula/zsh", as:theme
 
 # mark completion
