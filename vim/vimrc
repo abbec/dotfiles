@@ -118,6 +118,9 @@ nnoremap <leader>q :noh<CR>
 set showmatch " Show matching brackets
 set number " always show linenumbers
 
+" I like to spell correctly
+set spell spelllang=en_us
+
 " check one time after 4s of inactivity in normal mode
 set autoread
 func! MyHandler(timer)
