@@ -24,7 +24,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.history
-setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
 
 # use ssh agent from gpg
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
