@@ -118,7 +118,7 @@ set forward_quote                    # include message in forwards
 ###########################
 
 # Palette for use with the Linux console.  Black background.
-source ~/.mutt/dracula.muttrc
+source ~/.mutt/base16.muttrc
 
 # Patch syntax highlighting
 color   body    brightwhite     default         ^(diff).*

@@ -27,14 +27,10 @@ Plug 'chriskempson/base16-vim'
 " code checking
 Plug 'w0rp/ale'
 
-" important 💩
-Plug 'kyuhi/vim-emoji-complete'
-
 " syntaxes
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'tpope/vim-markdown'
 let g:jsx_ext_required = 0
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
@@ -54,9 +50,9 @@ func! FormatElmAlt()
 	let l:curw = winsaveview()
 	:%! elm-format --stdin
 
-    if v:shell_error != 0
-        :undo
-    endif
+	if v:shell_error != 0
+		:undo
+	endif
 	call winrestview(l:curw)
 endf
 
@@ -65,7 +61,7 @@ endf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" Mapping selecting mappings
+" fzf mappings
 nnoremap <c-p> :Files<cr>
 nnoremap <c-g> :GFiles<cr>
 if filereadable($HOME . "/.vim-site-plugins.vimrc")
@@ -81,11 +77,10 @@ set textwidth=100
 set hidden
 
 " ale linters
-let g:ale_linters = {'rust': ['cargo']}
+let g:ale_linters = {'rust': ['rls']}
 let g:ale_rust_cargo_check_tests = 1
 let g:ale_rust_cargo_check_all_targets = 1
 let g:ale_rust_rls_toolchain = 'stable'
-" let g:ale_open_list = 0
 
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
