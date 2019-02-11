@@ -39,8 +39,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'rust-lang/rust.vim'
 Plug 'racer-rust/vim-racer'
 let g:racer_experimental_completer = 1
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
+"let g:rustfmt_autosave = 1
 let g:rust_fold = 1
 Plug 'Quramy/tsuquyomi'
 Plug 'davidhalter/jedi-vim'
@@ -56,10 +55,19 @@ func! FormatElmAlt()
 	call winrestview(l:curw)
 endf
 
-
 " find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+
+" completion
+let g:mucomplete#can_complete = { }
+let g:mucomplete#can_complete.rust = { 'omni' : { t -> t =~ '\m\%(\k\k\|\.\)$' } }
+let g:mucomplete#always_use_completeopt = 1
+set completeopt-=preview
+set completeopt+=longest,menuone,noselect
+set shortmess+=c   " Shut off completion messages
+
+Plug 'lifepillar/vim-mucomplete'
 
 " fzf mappings
 nnoremap <c-p> :Files<cr>
@@ -85,8 +93,6 @@ let g:ale_rust_rls_toolchain = 'stable'
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
 nnoremap <leader>F :FindInFiles<space>
-
-set completeopt=longest,menuone,preview
 
 " put all backups in a separate dir
 set backupcopy=yes
