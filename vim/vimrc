@@ -37,12 +37,13 @@ Plug 'peitalin/vim-jsx-typescript'
 
 " languages
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
-let g:racer_experimental_completer = 1
 let g:rustfmt_autosave = 1
 " cannot currently have folds since it sets foldmethod=syntax
 " which slows down rustfmt to unbearable levels
 " let g:rust_fold = 1
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+
 Plug 'Quramy/tsuquyomi'
 Plug 'davidhalter/jedi-vim'
 Plug 'elmcast/elm-vim'
@@ -61,16 +62,6 @@ endf
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-" completion
-let g:mucomplete#can_complete = { }
-let g:mucomplete#can_complete.rust = { 'omni' : { t -> t =~ '\m\%(\k\k\|\.\)$' } }
-let g:mucomplete#always_use_completeopt = 1
-set completeopt-=preview
-set completeopt+=longest,menuone,noselect
-set shortmess+=c   " Shut off completion messages
-
-Plug 'lifepillar/vim-mucomplete'
-
 " fzf mappings
 nnoremap <c-p> :Files<cr>
 nnoremap <c-g> :GFiles<cr>
@@ -86,11 +77,24 @@ set nowrap
 set textwidth=100
 set hidden
 
+if executable('rls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'rls',
+        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+        \ 'whitelist': ['rust'],
+        \ })
+endif
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_signs_enabled = 1 " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '☠️'}
+let g:lsp_signs_warning = {'text': '⚠️'}
+
+let g:lsp_async_completion = 1
+
 " ale linters
-let g:ale_linters = {'rust': ['rls']}
-let g:ale_rust_cargo_check_tests = 1
-let g:ale_rust_cargo_check_all_targets = 1
-let g:ale_rust_rls_toolchain = 'stable'
+let g:ale_linters = {'rust': []}
 
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
 nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
@@ -217,10 +221,9 @@ if has("autocmd")
 	augroup rust
 		autocmd!
 
-		au FileType rust nmap gd <Plug>(rust-def)
-		au FileType rust nmap gs <Plug>(rust-def-split)
-		au FileType rust nmap gx <Plug>(rust-def-vertical)
-		au FileType rust nmap <leader>gd <Plug>(rust-doc)
+		au FileType rust nmap gd <Plug>(lsp-definition)
+		au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
+		au FileType rust setlocal omnifunc=lsp#complete
 	augroup END
 
 	augroup elmFormat
