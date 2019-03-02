@@ -1,6 +1,6 @@
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
-	finish
+        finish
 endif
 
 let mapleader = ","
@@ -15,17 +15,12 @@ set runtimepath^=~/.vim  "Use instead of 'vimfiles' on windows
 call plug#begin('~/.vim/plugged')
 
 Plug 'tpope/vim-fugitive'
-Plug 'shumphrey/fugitive-gitlab.vim'
-let g:fugitive_gitlab_domains = ['https://git.frostbite.com/']
 nmap <leader>g :Gstatus<CR>
 
 Plug 'tpope/vim-dispatch'
 
 " themes
 Plug 'chriskempson/base16-vim'
-
-" code checking
-Plug 'w0rp/ale'
 
 " syntaxes
 Plug 'cakebaker/scss-syntax.vim'
@@ -41,22 +36,29 @@ let g:rustfmt_autosave = 1
 " cannot currently have folds since it sets foldmethod=syntax
 " which slows down rustfmt to unbearable levels
 " let g:rust_fold = 1
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
 
-Plug 'Quramy/tsuquyomi'
-Plug 'davidhalter/jedi-vim'
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 0
 func! FormatElmAlt()
-	let l:curw = winsaveview()
-	:%! elm-format --stdin
+        let l:curw = winsaveview()
+        :%! elm-format --stdin
 
-	if v:shell_error != 0
-		:undo
-	endif
-	call winrestview(l:curw)
+        if v:shell_error != 0
+                :undo
+        endif
+        call winrestview(l:curw)
 endf
+
+" language server
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_signs_enabled = 1 " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '💀'}
+let g:lsp_signs_warning = {'text': '⚠️'}
+let g:lsp_async_completion = 1
+
 
 " find
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -66,7 +68,7 @@ Plug 'junegunn/fzf.vim'
 nnoremap <c-p> :Files<cr>
 nnoremap <c-g> :GFiles<cr>
 if filereadable($HOME . "/.vim-site-plugins.vimrc")
-	source ~/.vim-site-plugins.vimrc
+        source ~/.vim-site-plugins.vimrc
 endif
 
 call plug#end()
@@ -77,28 +79,7 @@ set nowrap
 set textwidth=100
 set hidden
 
-if executable('rls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'rls',
-        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-        \ 'whitelist': ['rust'],
-        \ })
-endif
-
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_signs_enabled = 1 " enable signs
-let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-let g:lsp_signs_error = {'text': '☠️'}
-let g:lsp_signs_warning = {'text': '⚠️'}
-
-let g:lsp_async_completion = 1
-
-" ale linters
-let g:ale_linters = {'rust': []}
-
 command! -bang -nargs=* FindInFiles call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --glob "!.git/*" --follow --color "always" '.shellescape(<q-args>), 1, <bang>0)
-nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
-nnoremap <leader>F :FindInFiles<space>
 
 " put all backups in a separate dir
 set backupcopy=yes
@@ -109,12 +90,14 @@ set directory=~/vimtmp,.
 set backspace=indent,eol,start
 
 " Tab and editor settings
-set history=50		" keep 50 lines of command line history
+set history=50 " keep 50 lines of command line history
 set laststatus=2
 set encoding=utf-8
+set expandtab
+set autoindent " always set autoindenting on
 
 " Searching
-set incsearch		" do incremental searching
+set incsearch " do incremental searching
 set ignorecase
 set smartcase
 
@@ -131,34 +114,40 @@ set spelllang=en_us
 " check one time after 4s of inactivity in normal mode
 set autoread
 func! MyHandler(timer)
-	:checktime
+        :checktime
 endfunc
 let timer = timer_start(2000, 'MyHandler', {'repeat': -1})
 
 " show whitespace
 set listchars=space:·,tab:→\ 
 set list
+
+" global mappings
 nmap <leader>l :set list!<CR>
 
 " Use space to get into command mode
 noremap <Space> :
 
+" search in files
+nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
+nnoremap <leader>F :FindInFiles<space>
+
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
-	set mouse=a
-	set ttymouse=sgr
+        set mouse=a
+        set ttymouse=sgr
 endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-	syntax on
-	set hlsearch
+        syntax on
+        set hlsearch
 
-	if filereadable(expand("~/.vimrc_background"))
-		let base16colorspace=256
-		source ~/.vimrc_background
-	endif
+        if filereadable(expand("~/.vimrc_background"))
+                let base16colorspace=256
+                source ~/.vimrc_background
+        endif
 endif
 
 set guifont=Source\ Code\ Pro\ 9,Source\ Code\ Pro:h9
@@ -189,9 +178,11 @@ set t_vb=
 " ---------------
 " Mouse
 " ---------------
-set mousehide  " Hide mouse after chars typed
+set mousehide " Hide mouse after chars typed
 
+" --------------
 " statusline
+" --------------
 set statusline=
 set statusline+=%#CursorColumn#
 set statusline+=🌵\ %{FugitiveHead(8)}
@@ -205,30 +196,28 @@ set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=[%{&fileformat}\]
 set statusline+=\ 📏\ %l(%L)
 
-highlight ExtraWhitespace ctermbg=darkgreen guibg=darkgreen
-
-" Customize spelling colors
-hi SpellCap gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightyellow ctermfg=yellow
-hi SpellBad gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightred ctermfg=red
-hi SpellRare gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightgreen ctermfg=green
-hi SpellLocal gui=underline cterm=underline ctermbg=NONE guibg=NONE guifg=lightgreen ctermfg=green
-
-" whitespace syntax color
-hi SpecialKey guifg=gray40 ctermfg=gray
-
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-	augroup rust
-		autocmd!
+        augroup rust
+                autocmd!
+                au FileType rust nmap gd <Plug>(lsp-definition)
+                au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
+                au FileType rust setlocal omnifunc=lsp#complete
+        augroup END
 
-		au FileType rust nmap gd <Plug>(lsp-definition)
-		au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
-		au FileType rust setlocal omnifunc=lsp#complete
-	augroup END
+        augroup elmFormat
+                autocmd!
+                autocmd BufWritePre *.elm call FormatElmAlt()
+        augroup END
 
-	augroup elmFormat
-		autocmd!
-		autocmd BufWritePre *.elm call FormatElmAlt()
-	augroup END
+        augroup lspServers
+                autocmd!
+                if executable('rls')
+                        au User lsp_setup call lsp#register_server({
+                                                \ 'name': 'rls',
+                                                \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+                                                \ 'whitelist': ['rust'],
+                                                \ })
+                endif
+        augroup END
 endif " has("autocmd")
-set autoindent " always set autoindenting on
