@@ -7,11 +7,7 @@ setopt COMPLETE_IN_WORD
 source ~/.zplug/init.zsh
 
 zplug "arzzen/calc.plugin.zsh"
-zplug "abbec/emoji-cli"
-EMOJI_CLI_FILTER=fzf
-EMOJI_CLI_KEYBIND=^X^E
 zplug "akoenig/npm-run.plugin.zsh"
-zplug "chriskempson/base16-shell", use:"scripts/base16-gruvbox-light-soft.sh"
 zplug "chriskempson/base16-shell", use:"base16-shell.plugin.zsh"
 zplug "dracula/zsh", as:theme
 
@@ -20,7 +16,7 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# have "globaL" history
+# have "global" history
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.history
