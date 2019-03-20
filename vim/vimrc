@@ -52,12 +52,6 @@ endf
 " language server
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-let g:lsp_diagnostics_enabled = 1
-let g:lsp_signs_enabled = 1 " enable signs
-let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-let g:lsp_signs_error = {'text': '💀'}
-let g:lsp_signs_warning = {'text': '⚠️'}
-let g:lsp_async_completion = 1
 
 
 " find
@@ -74,6 +68,13 @@ endif
 call plug#end()
 
 filetype plugin indent on
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_signs_enabled = 1 " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '💀'}
+let g:lsp_signs_warning = {'text': '⚠️'}
+let g:lsp_async_completion = 1
 
 set nowrap
 set textwidth=100
@@ -202,6 +203,7 @@ if has("autocmd")
                 autocmd!
                 au FileType rust nmap gd <Plug>(lsp-definition)
                 au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
+                au Filetype rust nmap <leader>r <Plug>(lsp-references)
                 au FileType rust setlocal omnifunc=lsp#complete
         augroup END
 
