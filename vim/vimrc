@@ -222,4 +222,18 @@ if has("autocmd")
                                                 \ })
                 endif
         augroup END
+
+	augroup rust
+		autocmd!
+
+		au FileType rust nmap gd <Plug>(lsp-definition)
+		au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
+		au FileType rust nmap <leader>r <Plug>(lsp-references)
+		au FileType rust setlocal omnifunc=lsp#complete
+	augroup END
+
+	augroup elmFormat
+		autocmd!
+		autocmd BufWritePre *.elm call FormatElmAlt()
+	augroup END
 endif " has("autocmd")
