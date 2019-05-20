@@ -20,7 +20,7 @@ nmap <leader>g :Gstatus<CR>
 Plug 'tpope/vim-dispatch'
 
 " themes
-Plug 'chriskempson/base16-vim'
+Plug 'danielwe/base16-vim'
 
 " syntaxes
 Plug 'cakebaker/scss-syntax.vim'
@@ -36,6 +36,8 @@ let g:rustfmt_autosave = 1
 " cannot currently have folds since it sets foldmethod=syntax
 " which slows down rustfmt to unbearable levels
 " let g:rust_fold = 1
+
+Plug 'python/black'
 
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 0
@@ -212,6 +214,11 @@ if has("autocmd")
                 autocmd BufWritePre *.elm call FormatElmAlt()
         augroup END
 
+        augroup blackFormat
+                autocmd!
+                "autocmd BufWritePre *.py execute ':Black'
+        augroup END
+
         augroup lspServers
                 autocmd!
                 if executable('rls')
@@ -221,16 +228,32 @@ if has("autocmd")
                                                 \ 'whitelist': ['rust'],
                                                 \ })
                 endif
+                if executable('pyls')
+                        au User lsp_setup call lsp#register_server({
+                                                \ 'name': 'pyls',
+                                                \ 'cmd': {server_info->['pyls']},
+                                                \ 'whitelist': ['python'],
+                                                \ 'workspace_config': {'pyls': {'configurationSources': ['flake8']}}
+                                                \ })
+                endif
         augroup END
 
-	augroup rust
-		autocmd!
+        augroup rust
+                autocmd!
 
-		au FileType rust nmap gd <Plug>(lsp-definition)
-		au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
-		au FileType rust nmap <leader>r <Plug>(lsp-references)
-		au FileType rust setlocal omnifunc=lsp#complete
-	augroup END
+                au FileType rust nmap gd <Plug>(lsp-definition)
+                au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
+                au FileType rust nmap <leader>r <Plug>(lsp-references)
+                au FileType rust setlocal omnifunc=lsp#complete
+        augroup END
+
+        augroup python_stuff
+                autocmd!
+                au FileType python nmap gd <Plug>(lsp-definition)
+                au FileType python nmap <leader>gd <Plug>(lsp-document-symbol)
+                au FileType python nmap <leader>r <Plug>(lsp-references)
+                au FileType python setlocal omnifunc=lsp#complete
+        augroup END
 
 	augroup elmFormat
 		autocmd!
