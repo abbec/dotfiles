@@ -9,7 +9,8 @@ source ~/.zplug/init.zsh
 zplug "arzzen/calc.plugin.zsh"
 zplug "akoenig/npm-run.plugin.zsh"
 zplug "chriskempson/base16-shell", use:"base16-shell.plugin.zsh"
-zplug "dracula/zsh", as:theme
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
 
 # mark completion
 zstyle ':completion:*' menu select
