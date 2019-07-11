@@ -1,16 +1,16 @@
-autoload -U compinit
-compinit
-
 # allow tab completion in the middle of a word
 setopt COMPLETE_IN_WORD
 
 source ~/.zplug/init.zsh
 
-zplug "arzzen/calc.plugin.zsh"
 zplug "akoenig/npm-run.plugin.zsh"
 zplug "chriskempson/base16-shell", use:"base16-shell.plugin.zsh"
+zplug "zsh-users/zsh-syntax-highlighting"
 zplug "mafredri/zsh-async"
 zplug "sindresorhus/pure", use:"pure.zsh", as:"theme"
+zplug "arzzen/calc.plugin.zsh", defer:2
+zplug "chisui/zsh-nix-shell"
+zplug "spwhitt/nix-zsh-completions"
 
 # mark completion
 zstyle ':completion:*' menu select
@@ -28,6 +28,9 @@ export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 
 # local bin
 export PATH="~/bin:$PATH"
+
+# local man pages
+export MANPATH=$HOME/.local/share/man:$MANPATH
 
 # vim
 export EDITOR=vim

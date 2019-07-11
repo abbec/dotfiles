@@ -107,6 +107,9 @@ set smartcase
 " Use <leader>q to turn off highlighting
 nnoremap <leader>q :noh<CR>
 
+" Use <leader>k to kill buffer but not split
+nnoremap <leader>k :bp\|bd #<CR>
+
 " Visual stuff
 set showmatch " Show matching brackets
 set number " always show linenumbers
