@@ -35,9 +35,19 @@ export MANPATH=$HOME/.local/share/man:$MANPATH
 # vim
 export EDITOR=vim
 
-# But still use emacs-style zsh bindings
-bindkey -e
-bindkey "^[[3~" delete-char
+# backspace and ^h working even after
+# returning from command mode
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+
+# normal home, end and delete
+typeset -g -A key
+bindkey "${terminfo[khome]}" beginning-of-line
+bindkey "${terminfo[kend]}" end-of-line
+bindkey "${terminfo[kdch1]}" delete-char
+
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
 
 # arrow to search
 autoload -U up-line-or-beginning-search
