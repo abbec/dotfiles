@@ -6,6 +6,7 @@ source ~/.zplug/init.zsh
 zplug "akoenig/npm-run.plugin.zsh"
 zplug "chriskempson/base16-shell", use:"base16-shell.plugin.zsh"
 zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "mafredri/zsh-async"
 zplug "sindresorhus/pure", use:"pure.zsh", as:"theme"
 zplug "arzzen/calc.plugin.zsh", defer:2
@@ -27,7 +28,7 @@ setopt INC_APPEND_HISTORY
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
 
 # local bin
-export PATH="~/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # local man pages
 export MANPATH=$HOME/.local/share/man:$MANPATH
@@ -56,6 +57,8 @@ zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
 bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

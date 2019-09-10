@@ -29,6 +29,7 @@ Plug 'mxw/vim-jsx'
 let g:jsx_ext_required = 0
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'LnL7/vim-nix'
 
 " languages
 Plug 'rust-lang/rust.vim'
@@ -38,6 +39,7 @@ let g:rustfmt_autosave = 1
 " let g:rust_fold = 1
 
 Plug 'python/black'
+let g:black_linelength = 100
 
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 0
@@ -76,6 +78,7 @@ let g:lsp_signs_enabled = 1 " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:lsp_signs_error = {'text': '💀'}
 let g:lsp_signs_warning = {'text': '⚠️'}
+let g:lsp_signs_information = {'text': '🤔'}
 let g:lsp_async_completion = 1
 
 set nowrap
@@ -204,14 +207,6 @@ set statusline+=\ 📏\ %l(%L)
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-        augroup rust
-                autocmd!
-                au FileType rust nmap gd <Plug>(lsp-definition)
-                au FileType rust nmap <leader>gd <Plug>(lsp-document-symbol)
-                au Filetype rust nmap <leader>r <Plug>(lsp-references)
-                au FileType rust setlocal omnifunc=lsp#complete
-        augroup END
-
         augroup elmFormat
                 autocmd!
                 autocmd BufWritePre *.elm call FormatElmAlt()
@@ -236,7 +231,7 @@ if has("autocmd")
                                                 \ 'name': 'pyls',
                                                 \ 'cmd': {server_info->['pyls']},
                                                 \ 'whitelist': ['python'],
-                                                \ 'workspace_config': {'pyls': {'configurationSources': ['flake8']}}
+                                                \ 'workspace_config': {'pyls': {'plugins': {'pycodestyle': {'enabled': v:false}}}}
                                                 \ })
                 endif
         augroup END
@@ -256,10 +251,6 @@ if has("autocmd")
                 au FileType python nmap <leader>gd <Plug>(lsp-document-symbol)
                 au FileType python nmap <leader>r <Plug>(lsp-references)
                 au FileType python setlocal omnifunc=lsp#complete
+                au BufWritePre *.py execute ':Black'
         augroup END
-
-	augroup elmFormat
-		autocmd!
-		autocmd BufWritePre *.elm call FormatElmAlt()
-	augroup END
 endif " has("autocmd")
