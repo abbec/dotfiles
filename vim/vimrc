@@ -21,6 +21,7 @@ Plug 'tpope/vim-dispatch'
 
 " themes
 Plug 'danielwe/base16-vim'
+Plug 'letorbi/vim-colors-modern-borland'
 
 " syntaxes
 Plug 'cakebaker/scss-syntax.vim'
@@ -39,7 +40,6 @@ let g:rustfmt_autosave = 1
 " let g:rust_fold = 1
 
 Plug 'python/black'
-let g:black_linelength = 100
 
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 0
@@ -52,6 +52,8 @@ func! FormatElmAlt()
         endif
         call winrestview(l:curw)
 endf
+
+Plug 'hashivim/vim-terraform'
 
 " language server
 Plug 'prabirshrestha/async.vim'
@@ -212,17 +214,12 @@ if has("autocmd")
                 autocmd BufWritePre *.elm call FormatElmAlt()
         augroup END
 
-        augroup blackFormat
-                autocmd!
-                "autocmd BufWritePre *.py execute ':Black'
-        augroup END
-
         augroup lspServers
                 autocmd!
                 if executable('rls')
                         au User lsp_setup call lsp#register_server({
                                                 \ 'name': 'rls',
-                                                \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+                                                \ 'cmd': {server_info->['rls']},
                                                 \ 'whitelist': ['rust'],
                                                 \ })
                 endif
