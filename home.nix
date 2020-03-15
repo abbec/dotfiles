@@ -37,6 +37,10 @@
 
   programs.termite = {
     enable = true;
+    browser = "${pkgs.firefox}/bin/firefox";
+    clickableUrl = true;
+    fullscreen = true;
+    iconName = "terminal";
   };
 
   programs.rofi = {
@@ -71,8 +75,8 @@
   programs.tmux = {
     enable = true;
     extraConfig = ''
-      ${builtins.readFile ~/code/dotfiles/tmux.conf}
-      ${builtins.readFile ~/code/dotfiles/tmux.unix.conf}
+      ${builtins.readFile ./tmux.conf}
+      ${builtins.readFile ./tmux.unix.conf}
     '';
   };
 
