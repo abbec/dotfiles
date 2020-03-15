@@ -7,9 +7,14 @@
     powertop
     ripgrep
     xclip
-    ibus
+    fira-code
+    twitter-color-emoji
+    ttf_bitstream_vera
+    yubikey-manager
+    yubikey-personalization-gui
   ];
 
+  fonts.fontconfig.enable = true;
   programs.firefox.enable = true;
 
   home.keyboard = {
@@ -28,6 +33,10 @@
   programs.zsh = {
     enable = true;
     initExtra = "source ~/code/dotfiles/zshrc.zsh";
+  };
+
+  programs.termite = {
+    enable = true;
   };
 
   programs.rofi = {
@@ -80,19 +89,23 @@
     settings = {
       font = {
         normal = {
-          family = "Fira Code";
+          family = "monospace";
+        };
+        bold = {
+          family = "monospace";
+        };
+        italic = {
+          family = "monospace";
         };
         size = 7;
       };
     };
   };
 
-  fonts.fontconfig.enable = true;
-
   home.file = {
     "default-fonts" = {
-      source = ~/code/dotfiles/fonts.conf;
-      target = ".config/fontconfig/conf.d/20-defaults.conf";
+      source = ./fonts.conf;
+      target = ".config/fontconfig/conf.d/99-default-fonts.conf";
       onChange = ''
         fc-cache -f -v
       '';

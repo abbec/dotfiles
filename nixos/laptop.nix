@@ -27,17 +27,13 @@
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
 
-  fonts.fonts = with pkgs; [
-    fira-code
-    twemoji-color-font
-    ttf_bitstream_vera
-  ];
 
   # Select internationalisation properties.
   i18n = {
     consoleFont = "Lat2-Terminus16";
     consoleUseXkbConfig = true;
     defaultLocale = "en_US.UTF-8";
+    inputMethod.enabled = "ibus";
   };
 
   # Set your time zone.
@@ -85,6 +81,13 @@
   # this is a laptop
   services.upower.enable = true;
 
+  fonts.fontconfig.defaultFonts = {
+    emoji = pkgs.lib.mkForce [];
+    monospace = pkgs.lib.mkForce [];
+    sansSerif = pkgs.lib.mkForce [];
+    serif = pkgs.lib.mkForce [];
+  };
+
   users.users = {
     abbe = {
       isNormalUser = true;
@@ -98,6 +101,11 @@
   # yubikey things
   services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host ];
   services.pcscd.enable = true;
+
+  security.pam.u2f = {
+    enable = true;
+    cue = true;
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
