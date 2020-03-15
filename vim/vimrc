@@ -39,7 +39,9 @@ let g:rustfmt_autosave = 1
 " which slows down rustfmt to unbearable levels
 " let g:rust_fold = 1
 
-Plug 'python/black'
+if has("python3")
+        Plug 'python/black'
+endif
 
 Plug 'elmcast/elm-vim'
 let g:elm_format_autosave = 0
