@@ -1,14 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  home.packages = [
-    pkgs.htop
-    pkgs.fira-code
-    pkgs.discord
-    pkgs.powertop
-    pkgs.ripgrep
-    pkgs.xclip
-    pkgs.xorg.xclock
+  home.packages = with pkgs; [
+    htop
+    discord
+    powertop
+    ripgrep
+    xclip
+    ibus
   ];
 
   programs.firefox.enable = true;
@@ -50,6 +49,10 @@
     };
   };
 
+  programs.gpg = {
+    enable = true;
+  };
+
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
@@ -76,11 +79,23 @@
     enable = true;
     settings = {
       font = {
-        # normal = {
-        #   family = "Fira Code";
-        # };
-        size = 7.0;
+        normal = {
+          family = "Fira Code";
+        };
+        size = 7;
       };
+    };
+  };
+
+  fonts.fontconfig.enable = true;
+
+  home.file = {
+    "default-fonts" = {
+      source = ~/code/dotfiles/fonts.conf;
+      target = ".config/fontconfig/conf.d/20-defaults.conf";
+      onChange = ''
+        fc-cache -f -v
+      '';
     };
   };
 

@@ -27,6 +27,12 @@
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
 
+  fonts.fonts = with pkgs; [
+    fira-code
+    twemoji-color-font
+    ttf_bitstream_vera
+  ];
+
   # Select internationalisation properties.
   i18n = {
     consoleFont = "Lat2-Terminus16";
@@ -79,13 +85,14 @@
   # this is a laptop
   services.upower.enable = true;
 
-  programs.zsh.enable = true;
-  users.users.abbe = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "video" "networkmanager" ];
-    description = "Albert Cervin";
-    home = "/home/abbe";
-    shell = pkgs.zsh;
+  users.users = {
+    abbe = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" "audio" "video" "networkmanager" ];
+      description = "Albert Cervin";
+      home = "/home/abbe";
+      shell = pkgs.zsh;
+    };
   };
 
   # yubikey things
