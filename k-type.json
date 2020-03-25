@@ -1312,17 +1312,15 @@
         "P[r:i,c:i](23,226,43)",
         "P[r:i,c:i](35,171,39)",
         "P[r:i,c:i](36,119,33)",
-        "P[r:i,c:i](29,71,25)",
-        "P[r:i,c:i](0,0,0)",
-        "P[r:i,c:i](0,0,0)"
+        "P[r:i,c:i](29,71,25)"
       ],
       "settings": "framedelay:2, framestretch, loops:1, replace:stack"
     },
     "miami": {
       "type": "custom",
-      "settings": "loop, replace:clear, start , pfunc:interp",
+      "settings": "loop, replace:clear, pfunc:interp, start",
       "frames": [
-        "P[c:1%] (255,0,180),   P[c:25%](46,255,255), P[c:50%](255,0,180),   P[c:75%](204,255,0), P[c:100%](46,255,255)"
+        "P[c:1%] (255,0,180),\nP[c:25%](46,255,255),\nP[c:50%](255,0,180),\nP[c:75%](204,255,0),\nP[c:100%](46,255,255)\nP[31-33](181,0,169),\nP[48-50](181,0,169),\nP[52-62](0, 189, 41)"
       ]
     }
   },
