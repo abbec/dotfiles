@@ -2,8 +2,10 @@
 {
 
   imports = if builtins.currentSystem == "x86_64-linux"
-            then [ ./linux.nix ]
-            else [];
+  then [ ./linux.nix ]
+  else if builtins.currentSystem == "x86_64-darwin"
+  then [./macos.nix]
+  else [];
 
   home.packages = with pkgs; [
     fira-code
@@ -11,6 +13,7 @@
     ripgrep
     nodejs # required by coc.nvim
     fontconfig
+    glances
   ];
 
   home.keyboard = {
@@ -87,8 +90,9 @@
       dc = "diff --cached"; # display the staged changes
       bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d"; # delete merged branches
       st = "status -sb"; # fancier status command
+      can = "commit --amend --no-edit"; # amend to last commit
       please = "push --force-with-lease"; # force push with lease
-      apa = "add -p -a"; # add in patches
+      apa = "add -p -A"; # add in patches
 
       serve = "!git daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose";
       hub = "!git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose";

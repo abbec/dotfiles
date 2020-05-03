@@ -1,4 +1,3 @@
-
 filetype plugin indent on
 
 set nowrap
@@ -14,11 +13,6 @@ set expandtab
 set ignorecase
 set smartcase
 
-" Use <leader>q to turn off highlighting
-nnoremap <leader>q :noh<CR>
-
-" Use <leader>k to kill buffer but not split
-nnoremap <leader>k :bp\|bd #<CR>
 
 " Visual stuff
 set showmatch " Show matching brackets
@@ -30,16 +24,6 @@ set spelllang=en_us
 " show whitespace
 set listchars=space:·,tab:→\ 
 set list
-
-" global mappings
-nmap <leader>l :set list!<CR>
-
-" Use space to get into command mode
-noremap <Space> :
-
-" search in files
-nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
-nnoremap <leader>F :FindInFiles<space>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
@@ -57,11 +41,6 @@ if &t_Co > 2 || has("gui_running")
                 source ~/.vimrc_background
         endif
 endif
-
-
-" ---------------
-" Mouse
-" ---------------
 
 " --------------
 " statusline
@@ -103,3 +82,19 @@ nnoremap <c-g> :GFiles<cr>
 " diff shortcuts for fugitive
 nnoremap <leader>2 :diffget //2<CR>
 nnoremap <leader>3 :diffget //3<CR>
+
+" global mappings
+nmap <leader>l :set list!<CR>
+
+" Use space to get into command mode
+noremap <Space> :
+
+" search in files
+nnoremap <leader>f :FindInFiles <c-r><c-w><cr>
+nnoremap <leader>F :FindInFiles<space>
+
+" Use <leader>q to turn off highlighting
+nnoremap <leader>q :noh<CR>
+
+" Use <leader>k to kill buffer but not split
+nnoremap <leader>k :bp\|bd #<CR>

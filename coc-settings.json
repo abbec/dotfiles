@@ -18,7 +18,7 @@
                 "--log-file",
                 "/tmp/lsp_python.log"
             ],
-            "trace.server": "verbose",
+            "rootPatterns": ["setup.py", "setup.cfg", "pyproject.toml"],
             "filetypes": [
                 "python"
             ],
@@ -47,7 +47,7 @@
                             "all_scopes": true
                         },
                         "mccabe": {
-                            "enabled": true,
+                            "enabled": false,
                             "threshold": 15
                         },
                         "preload": {
@@ -76,5 +76,6 @@
         }
     },
 
-    "coc.preferences.formatOnSaveFiletypes": ["rust"]
+    "python.formatting.provider": "black",
+    "coc.preferences.formatOnSaveFiletypes": ["rust", "python"]
 }
