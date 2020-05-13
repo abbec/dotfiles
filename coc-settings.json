@@ -7,7 +7,7 @@
         },
         "rust-analyzer": {
             "command": "rust-analyzer",
-            "filetypes": [],
+            "filetypes": ["rust"],
             "rootPatterns": ["Cargo.toml"]
         },
         "pyls": {
