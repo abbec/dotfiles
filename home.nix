@@ -13,7 +13,6 @@
     ripgrep
     nodejs # required by coc.nvim
     fontconfig
-    glances
     mpv
   ];
 

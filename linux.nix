@@ -8,6 +8,7 @@
     yubikey-personalization-gui
     ttf_bitstream_vera
     twitter-color-emoji
+    fixedsys-excelsior
   ];
 
   services.gpg-agent = {
@@ -32,6 +33,7 @@
     clickableUrl = true;
     fullscreen = true;
     iconName = "terminal";
+    font = "monospace 10";
   };
 
   programs.rofi = {

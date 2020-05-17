@@ -27,13 +27,17 @@
   networking.interfaces.enp0s25.useDHCP = true;
   networking.interfaces.wlp3s0.useDHCP = true;
 
+  networking.firewall.enable = false;
 
   # Select internationalisation properties.
   i18n = {
-    consoleFont = "Lat2-Terminus16";
-    consoleUseXkbConfig = true;
     defaultLocale = "en_US.UTF-8";
     inputMethod.enabled = "ibus";
+  };
+
+  console = {
+    font = "Lat2-Terminus16";
+    useXkbConfig = true;
   };
 
   # Set your time zone.
