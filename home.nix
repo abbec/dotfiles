@@ -14,6 +14,7 @@
     nodejs # required by coc.nvim
     fontconfig
     mpv
+    bat
   ];
 
   home.keyboard = {
@@ -122,9 +123,13 @@
           fugitive
           fzf-vim
           base16-vim
+          coc-nvim
+
+          # language support
           vim-nix
           vim-protobuf
-          coc-nvim
+          vim-toml
+          vim-jinja
         ];
 
         # can be loaded manually with `:packadd <plugin-name>`
