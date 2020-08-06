@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     discord
     powertop
-    xclip
+    xsel
     yubikey-manager
     yubikey-personalization-gui
     ttf_bitstream_vera

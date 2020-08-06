@@ -164,24 +164,6 @@
     secureSocket = builtins.currentSystem != "x86_64-darwin";
   };
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      font = {
-        normal = {
-          family = "monospace";
-        };
-        bold = {
-          family = "monospace";
-        };
-        italic = {
-          family = "monospace";
-        };
-        size = 7;
-      };
-    };
-  };
-
   home.sessionVariables = {
     EDITOR = "nvim";
   };
