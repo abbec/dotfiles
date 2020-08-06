@@ -151,12 +151,14 @@
 
   programs.tmux = {
     enable = true;
+    terminal = "xterm-256color";
+    keyMode = "vi";
     extraConfig = ''
       ${builtins.readFile ./tmux.conf}
       ${if builtins.currentSystem == "x86_64-darwin" then
-      builtins.readFile ./tmux.unix.conf
+      builtins.readFile ./tmux.macos.conf
       else
-      builtins.readFile ./tmux.macos.conf}
+      builtins.readFile ./tmux.unix.conf}
     '';
 
     secureSocket = builtins.currentSystem != "x86_64-darwin";

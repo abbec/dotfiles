@@ -1,8 +1,8 @@
 { config, pkgs, ...}:
 {
-  home.packages = {
+  home.packages = with pkgs; [
     glances
-  };
+  ];
 
   home.file.".gnupg/gpg-agent.conf".text = ''
     enable-ssh-support
