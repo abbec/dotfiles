@@ -1,4 +1,8 @@
 { config, pkgs, ... }:
+
+let
+   pkgsUnstable = import <nixpkgs-unstable> {};
+in
 {
   home.packages = with pkgs; [
     discord
@@ -9,6 +13,7 @@
     ttf_bitstream_vera
     twitter-color-emoji
     fixedsys-excelsior
+    pkgsUnstable.obs-studio
   ];
 
   services.gpg-agent = {

@@ -102,6 +102,8 @@
     };
   };
 
+  nix.trustedUsers = [ "abbe" ];
+
   # yubikey things
   services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host ];
   services.pcscd.enable = true;
@@ -117,5 +119,15 @@
   # should.
   system.stateVersion = "19.09"; # Did you read the comment?
 
+  # intel video
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-media-driver # only available starting nixos-19.03 or the current nixos-unstable
+    ];
+  };
 }
 
