@@ -15,6 +15,8 @@
     fontconfig
     mpv
     bat
+
+    perlPackages.NetSMTPSSL # needed for git-send-email
   ];
 
   home.keyboard = {
@@ -98,12 +100,22 @@
       serve = "!git daemon --base-path=. --export-all --reuseaddr --informative-errors --verbose";
       hub = "!git daemon --base-path=. --export-all --enable=receive-pack --reuseaddr --informative-errors --verbose";
     };
+
+    extraConfig = {
+      sendemail = {
+        from = "Albert Cervin <albert@acervin.com>";
+        smtpserver = "smtp.gmail.com";
+        smtpuser = "albert@acervin.com";
+        smtpencryption = "tls";
+        smtpserverport = "587";
+      };
+    };
   };
 
   programs.fzf = rec {
     enable = true;
     enableZshIntegration = true;
-    defaultCommand = "${pkgs.ripgrep}/bin/rg --files";
+    defaultCommand = "rg --files";
     fileWidgetCommand = defaultCommand;
   };
 
@@ -118,12 +130,27 @@
         " coc config
         ${builtins.readFile ./coc-config.vim}
       '';
-      packages.nvimPlugins = with pkgs.vimPlugins; {
+      packages.nvimPlugins = with pkgs.vimPlugins;
+      let
+        customPlugins = {
+          rainbow = pkgs.vimUtils.buildVimPlugin {
+            name = "rainbow";
+            src = pkgs.fetchFromGitHub {
+              owner = "junegunn";
+              repo = "rainbow_parentheses.vim";
+              rev = "27e7cd73fec9d1162169180399ff8ea9fa28b003";
+              sha256 = "0izbjq6qbia013vmd84rdwjmwagln948jh9labhly0asnhqyrkb8";
+            };
+          };
+        };
+      in
+      {
         start = [
           fugitive
           fzf-vim
           base16-vim
           coc-nvim
+          customPlugins.rainbow
 
           # language support
           vim-nix

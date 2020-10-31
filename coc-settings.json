@@ -14,6 +14,9 @@
           "checkOnSave": {
             "enable": true,
             "command": "clippy"
+          },
+          "cargo": {
+            "allFeatures": true
           }
         }
       }
