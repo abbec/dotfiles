@@ -6,19 +6,6 @@ zstyle ':completion:*' menu select
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-# use ssh agent from gpg
-if [[ -z $XDG_RUNTIME_DIR ]]; then
-        export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
-else
-        export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
-fi
-
-# local bin
-export PATH="$HOME/bin:$PATH"
-
-# local man pages
-export MANPATH=$HOME/.local/share/man:$MANPATH
-
 # backspace and ^h working even after
 # returning from command mode
 bindkey '^?' backward-delete-char

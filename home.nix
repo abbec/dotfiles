@@ -17,11 +17,19 @@
     bat
 
     perlPackages.NetSMTPSSL # needed for git-send-email
+
+    (import <toolbelt> {})
   ];
 
   home.keyboard = {
     layout = "se";
     options = "terminate:ctrl_alt_bksp, caps:escape, nodeadkeys";
+  };
+
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
   };
 
   programs.zsh = {
@@ -30,15 +38,6 @@
     enableAutosuggestions = true;
     enableCompletion = true;
     plugins = [
-      {
-        name = "pure";
-        src = pkgs.fetchFromGitHub {
-          owner = "sindresorhus";
-          repo = "pure";
-          rev = "v1.11.0";
-          sha256 = "0nzvb5iqyn3fv9z5xba850mxphxmnsiq3wxm1rclzffislm8ml1j";
-        };
-      }
       {
         name = "base16-shell";
         src = pkgs.fetchFromGitHub {
