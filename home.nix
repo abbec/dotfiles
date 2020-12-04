@@ -16,6 +16,8 @@
     mpv
     bat
 
+    gitAndTools.delta
+
     perlPackages.NetSMTPSSL # needed for git-send-email
 
     (import <toolbelt> {})
@@ -81,6 +83,10 @@
 
     delta = {
       enable = true;
+      options = {
+        line-numbers = true;
+        theme = "base16";
+      };
     };
 
     aliases = {

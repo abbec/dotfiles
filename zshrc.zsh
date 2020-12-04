@@ -33,3 +33,5 @@ bindkey '^[OB' down-line-or-beginning-search
 function bwd() {
 	echo ${$(pwd):gs/\//🥖/}
 }
+
+export LANG="en_US.UTF-8"
