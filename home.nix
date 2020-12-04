@@ -79,13 +79,17 @@
       signByDefault = true;
     };
 
+    delta = {
+      enable = true;
+    };
+
     aliases = {
       lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       co = "checkout"; # checkout a branch
       cob = "checkout -b"; # checkout a new not yet existing branch
       f = "fetch -p"; # fetch from a repository and prune any remote-tracking references that no longer exist on the remote.
       c = "commit"; # commit your changes
-      p = "push"; # push you changes to a remote
+      p = "push"; # push your changes to a remote
       ba = "branch -a"; # list both remote-tracking branches and local branches.
       bd = "branch -d"; # delete a branch only if it has been merged
       bD = "branch -D"; # force delete a branch
@@ -107,6 +111,9 @@
         smtpuser = "albert@acervin.com";
         smtpencryption = "tls";
         smtpserverport = "587";
+      };
+      pull = {
+        rebase = true;
       };
     };
   };
