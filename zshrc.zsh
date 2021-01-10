@@ -20,6 +20,11 @@ bindkey "${terminfo[kdch1]}" delete-char
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
 
+# Correctly display UTF-8 with combining characters.
+if [[ "$(locale LC_CTYPE)" == "UTF-8" ]]; then
+    setopt COMBINING_CHARS
+fi
+
 # arrow to search
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
@@ -33,5 +38,3 @@ bindkey '^[OB' down-line-or-beginning-search
 function bwd() {
 	echo ${$(pwd):gs/\//🥖/}
 }
-
-export LANG="en_US.UTF-8"

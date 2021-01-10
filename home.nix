@@ -34,6 +34,15 @@
     enableBashIntegration = true;
   };
 
+  programs.emacs = {
+    enable = true;
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableNixDirenvIntegration = true;
+  };
+
   programs.zsh = {
     enable = true;
     initExtra = builtins.readFile ./zshrc.zsh;
@@ -182,6 +191,11 @@
       source = ./coc-settings.json;
       target = ".config/nvim/coc-settings.json";
     };
+
+    ".emacs.d" = {
+      source = ./emacs.d;
+      recursive = true;
+    };
   };
 
   programs.gpg = {
@@ -204,7 +218,7 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "nvim";
+    EDITOR = "emacs";
   };
 
   # Let Home Manager install and manage itself.
