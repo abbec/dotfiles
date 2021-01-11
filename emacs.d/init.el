@@ -92,9 +92,11 @@
 (use-package exec-path-from-shell
   :straight t
   :if (memq window-system '(mac ns))
-  :commands (exec-path-from-shell-initialize exec-path-from-shell-copy-env)
+  :commands (exec-path-from-shell-initialize)
   :init
-  (setq exec-path-from-shell-arguments '("-l")))
+  (setq exec-path-from-shell-arguments nil)
+  (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH"))
+  (exec-path-from-shell-initialize))
 
 (use-package direnv
   :straight t
@@ -104,7 +106,6 @@
   (advice-add 'lsp :before #'direnv-update-environment)
   :config
   (setq direnv-always-show-summary nil)
-  (exec-path-from-shell-initialize)
   (direnv-mode))
 
 (use-package flycheck
@@ -152,14 +153,11 @@
   (add-to-list 'load-path "~/.emacs.d/lang")
   (require 'nix)
   (require 'markdown)
+  (require 'lang-python)
   (require 'rust))
 
 (use-package magit
-  :straight t
-  :defer t
-  :config
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-env "SSH_AUTH_SOCK"))
+  :straight t)
 
 (use-package elcord
   :straight t
