@@ -36,6 +36,9 @@
 
   programs.emacs = {
     enable = true;
+    extraPackages = epkgs: [
+      epkgs.vterm
+    ];
   };
 
   programs.direnv = {

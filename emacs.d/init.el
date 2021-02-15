@@ -9,6 +9,9 @@
 (global-display-line-numbers-mode)
 (setq backup-directory-alist `(("." . "~/.saves")))
 
+(setq gc-cons-threshold (* 256 1024 1024)) ;; 256 MiB
+(setq read-process-output-max (* 1024 1024)) ;; 1 MiB
+
 ;; install straight
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
 (eval-and-compile
@@ -42,7 +45,7 @@
   (load-theme 'doom-one t)
 
   (setq-default doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
-  (doom-themes-treemacs-config)
+  ; (doom-themes-treemacs-config)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
@@ -60,6 +63,15 @@
   :straight t
   :commands dashboard-setup-startup-hook
   :init
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-navigator t)
+  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))
   (dashboard-setup-startup-hook))
 
 (use-package which-key
@@ -86,6 +98,10 @@
   :config
   (projectile-mode))
 
+(use-package ace-window
+  :straight t
+  :bind ("M-o" . ace-window))
+
 ;; Languages
 
 ;; global language config
@@ -95,7 +111,7 @@
   :commands (exec-path-from-shell-initialize)
   :init
   (setq exec-path-from-shell-arguments nil)
-  (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH"))
+  (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH" "SHELL" "NIX_PATH"))
   (exec-path-from-shell-initialize))
 
 (use-package direnv
@@ -118,14 +134,17 @@
   :commands global-company-mode
   :init (global-company-mode))
 
-;; (use-package company-box
-;;   :straight t
-;;   :hook (company-mode . company-box-mode))
+(use-package company-box
+  :straight t
+  :hook (company-mode . company-box-mode))
 
 (use-package lsp-mode
  :straight t
  :hook (lsp-mode . lsp-enable-which-key-integration)
- :commands lsp)
+ :commands lsp
+ :config
+ (setq lsp-signature-render-documentation nil)
+ (setq lsp-idle-delay 0.500))
 
 (use-package lsp-ui
   :straight t
@@ -145,9 +164,14 @@
   :config
   (yas-global-mode 1))
 
+(use-package rainbow-delimiters
+  :straight t
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (setq-default indent-tabs-mode nil) ; no thanks
 (setq-default whitespace-style '(face spaces space-mark tabs newline))
 (global-whitespace-mode t)
+(setq-default require-final-newline t)
 
 (eval-when-compile
   (add-to-list 'load-path "~/.emacs.d/lang")
@@ -155,6 +179,17 @@
   (require 'markdown)
   (require 'lang-python)
   (require 'rust))
+
+(use-package yaml-mode
+  :straight t
+  :mode ("\\.yaml\\'" "\\.yml\\'"))
+
+(use-package autorevert
+  :diminish auto-revert-mode
+  :config
+  (setq auto-revert-check-vc-info t)
+  (setq auto-revert-avoid-polling t)
+  (global-auto-revert-mode t))
 
 (use-package magit
   :straight t)
@@ -164,6 +199,9 @@
   :commands elcord-mode
   :init
   (elcord-mode))
+
+;; installed with nix
+(use-package vterm)
 
 (provide 'init)
 ;;; init.el ends here
