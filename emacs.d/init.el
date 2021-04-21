@@ -9,8 +9,8 @@
 (global-display-line-numbers-mode)
 (setq backup-directory-alist `(("." . "~/.saves")))
 
-(setq gc-cons-threshold (* 256 1024 1024)) ;; 256 MiB
-(setq read-process-output-max (* 1024 1024)) ;; 1 MiB
+(setq gc-cons-threshold (* 512 1024 1024)) ;; 512 MiB
+(setq read-process-output-max (* 10 1024 1024)) ;; 10 MiB
 
 ;; install straight
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
@@ -32,6 +32,9 @@
 
 ;; Visual stuff
 (set-frame-font "Fixedsys Excelsior 16" nil t)
+
+(setq-default column-number-mode t)
+
 ;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
 (set-fontset-font t 'symbol "Apple Color Emoji")
 (set-fontset-font t 'symbol "Twemoji" nil 'append)
@@ -102,6 +105,10 @@
   :straight t
   :bind ("M-o" . ace-window))
 
+;; as it turns out, we are not insane
+(prefer-coding-system 'utf-8)
+(setq-default default-buffer-file-coding-system 'utf-8)
+
 ;; Languages
 
 ;; global language config
@@ -113,6 +120,10 @@
   (setq exec-path-from-shell-arguments nil)
   (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH" "SHELL" "NIX_PATH"))
   (exec-path-from-shell-initialize))
+
+;; some sane line length defaults
+(setq-default fill-column 90)
+(setq-default auto-fill-function 'do-auto-fill)
 
 (use-package direnv
   :straight t
@@ -137,6 +148,11 @@
 (use-package company-box
   :straight t
   :hook (company-mode . company-box-mode))
+
+(use-package company-emoji
+  :straight t
+  :config
+  (add-to-list 'company-backends 'company-emoji))
 
 (use-package lsp-mode
  :straight t
@@ -178,7 +194,9 @@
   (require 'nix)
   (require 'markdown)
   (require 'lang-python)
-  (require 'rust))
+  (require 'rust)
+  (require 'racket)
+  (require 'clojure))
 
 (use-package yaml-mode
   :straight t
@@ -193,6 +211,10 @@
 
 (use-package magit
   :straight t)
+
+(use-package forge
+  :straight t
+  :after magit)
 
 (use-package elcord
   :straight t

@@ -20,6 +20,8 @@
 
     perlPackages.NetSMTPSSL # needed for git-send-email
 
+    zulip-term
+
     (import <toolbelt> {})
   ];
 
@@ -146,15 +148,14 @@
   # editors
   programs.neovim = {
     enable = true;
-    configure = {
-      customRC = ''
-        " main config
-        ${builtins.readFile ./neovim.vim}
+    extraConfig = ''
+      " main config
+      ${builtins.readFile ./neovim.vim}
+      " coc config
+      ${builtins.readFile ./coc-config.vim}
+    '';
 
-        " coc config
-        ${builtins.readFile ./coc-config.vim}
-      '';
-      packages.nvimPlugins = with pkgs.vimPlugins;
+    plugins = with pkgs.vimPlugins;
       let
         customPlugins = {
           rainbow = pkgs.vimUtils.buildVimPlugin {
@@ -168,8 +169,7 @@
           };
         };
       in
-      {
-        start = [
+        [
           fugitive
           fzf-vim
           base16-vim
@@ -182,11 +182,6 @@
           vim-toml
           vim-jinja
         ];
-
-        # can be loaded manually with `:packadd <plugin-name>`
-        opt = [];
-      };
-    };
   };
 
   home.file = {

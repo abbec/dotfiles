@@ -30,5 +30,10 @@
    (setq lsp-rust-analyzer-server-display-inlay-hints t)
    (add-hook 'lsp-mode (lambda () (lsp-rust-analyzer-inlay-hints-mode))))
 
+(use-package cargo
+  :straight t
+  :hook (rust-mode . cargo-minor-mode))
+
+
 (provide 'rust)
 ;;; rust.el ends here
