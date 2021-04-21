@@ -37,7 +37,9 @@ if &t_Co > 2 || has("gui_running")
         set hlsearch
 
         if filereadable(expand("~/.vimrc_background"))
-                let base16colorspace=256
+                if !$KONSOLE
+                        let base16colorspace=256
+                endif
                 source ~/.vimrc_background
         endif
 endif

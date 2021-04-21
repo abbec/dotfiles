@@ -46,7 +46,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim pavucontrol python2 python3
+    wget vim pavucontrol python2 python3 latte-dock libsForQt5.qtstyleplugin-kvantum
   ];
 
   # Enable the OpenSSH daemon.
