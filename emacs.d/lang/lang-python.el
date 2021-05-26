@@ -13,7 +13,13 @@
   :commands python-mode
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
-  :hook (python-mode . lsp))
+  :init
+  (add-hook 'python-mode-hook #'lsp)
+  (add-hook 'python-mode-hook
+            (lambda ()
+              (message "asdasd")
+              (lsp-workspace-folders-add
+               (locate-dominating-file default-directory "setup.py")))))
 
 (provide 'lang-python)
 ;;; lang-python.el ends here

@@ -9,7 +9,7 @@
 (global-display-line-numbers-mode)
 (setq backup-directory-alist `(("." . "~/.saves")))
 
-(setq gc-cons-threshold (* 512 1024 1024)) ;; 512 MiB
+(setq gc-cons-threshold (* 256 1024 1024)) ;; 256 MiB
 (setq-default read-process-output-max (* 10 1024 1024)) ;; 10 MiB
 
 ;; install straight
@@ -31,7 +31,7 @@
   (straight-use-package 'use-package))
 
 ;; Visual stuff
-(set-frame-font "Fixedsys Excelsior 16" nil t)
+(set-frame-font "Spleen 8x16 16" nil t)
 
 (setq-default column-number-mode t)
 
@@ -147,15 +147,6 @@
   :straight t
   :commands global-company-mode
   :init (global-company-mode))
-
-(use-package company-box
-  :straight t
-  :hook (company-mode . company-box-mode))
-
-(use-package company-emoji
-  :straight t
-  :config
-  (add-to-list 'company-backends 'company-emoji))
 
 (use-package lsp-mode
  :straight t
