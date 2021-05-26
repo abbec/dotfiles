@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   pkgsUnstable = import <nixpkgs-unstable> {};
@@ -20,14 +20,23 @@ in
     ttf_bitstream_vera
     twitter-color-emoji
     fixedsys-excelsior
-    pkgsUnstable.obs-studio
     albert
+    spleen
+
+    pkgsUnstable.obs-studio
+    pkgsUnstable.zulip-term
   ];
 
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
     enableSshSupport = true;
+  };
+
+  # This is needed, otherwise the forwarded
+  # SSH_AUTH_SOCK is overwritten
+  home.sessionVariables = lib.mkAfter {
+    SSH_AUTH_SOCK = "\${SSH_AUTH_SOCK:-$(${pkgs.gnupg}/bin/gpgconf --list-dirs agent-ssh-socket)}";
   };
 
   programs.firefox.enable = true;

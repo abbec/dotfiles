@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     glances
+    zulip-term
   ];
 
   home.file.".gnupg/gpg-agent.conf".text = ''

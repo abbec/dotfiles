@@ -20,8 +20,6 @@
 
     perlPackages.NetSMTPSSL # needed for git-send-email
 
-    zulip-term
-
     (import <toolbelt> {})
   ];
 

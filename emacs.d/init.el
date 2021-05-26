@@ -10,7 +10,7 @@
 (setq backup-directory-alist `(("." . "~/.saves")))
 
 (setq gc-cons-threshold (* 512 1024 1024)) ;; 512 MiB
-(setq read-process-output-max (* 10 1024 1024)) ;; 10 MiB
+(setq-default read-process-output-max (* 10 1024 1024)) ;; 10 MiB
 
 ;; install straight
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
@@ -36,8 +36,11 @@
 (setq-default column-number-mode t)
 
 ;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
+(setq-default use-default-font-for-symbols nil)
 (set-fontset-font t 'symbol "Apple Color Emoji")
+(set-fontset-font t 'symbol "Twitter Color Emoji" nil 'append)
 (set-fontset-font t 'symbol "Twemoji" nil 'append)
+(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
 (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
 (set-fontset-font t 'symbol "Symbola" nil 'append)
 
