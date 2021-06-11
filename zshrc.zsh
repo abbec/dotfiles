@@ -38,3 +38,5 @@ bindkey '^[OB' down-line-or-beginning-search
 function bwd() {
 	echo ${$(pwd):gs/\//🥖/}
 }
+
+export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH

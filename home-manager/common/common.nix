@@ -1,12 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs , ... }:
 {
-
-  imports = if builtins.currentSystem == "x86_64-linux"
-  then [ ./linux.nix ]
-  else if builtins.currentSystem == "x86_64-darwin"
-  then [./macos.nix]
-  else [];
-
   home.packages = with pkgs; [
     fira-code
     htop
@@ -15,11 +8,10 @@
     fontconfig
     mpv
     bat
-
     gitAndTools.delta
-
+    zulip
+    glances
     perlPackages.NetSMTPSSL # needed for git-send-email
-
     (import <toolbelt> {})
   ];
 
@@ -48,7 +40,7 @@
 
   programs.zsh = {
     enable = true;
-    initExtra = builtins.readFile ./zshrc.zsh;
+    initExtra = builtins.readFile ../../zshrc.zsh;
     enableAutosuggestions = true;
     enableCompletion = true;
     plugins = [
@@ -148,9 +140,9 @@
     enable = true;
     extraConfig = ''
       " main config
-      ${builtins.readFile ./neovim.vim}
+      ${builtins.readFile ../../neovim.vim}
       " coc config
-      ${builtins.readFile ./coc-config.vim}
+      ${builtins.readFile ../../coc-config.vim}
     '';
 
     plugins = with pkgs.vimPlugins;
@@ -184,12 +176,12 @@
 
   home.file = {
     "coc-config" = {
-      source = ./coc-settings.json;
+      source = ../../coc-settings.json;
       target = ".config/nvim/coc-settings.json";
     };
 
     ".emacs.d" = {
-      source = ./emacs.d;
+      source = ../../emacs.d;
       recursive = true;
     };
   };
@@ -203,11 +195,11 @@
     terminal = "xterm-256color";
     keyMode = "vi";
     extraConfig = ''
-      ${builtins.readFile ./tmux.conf}
+      ${builtins.readFile ../../tmux.conf}
       ${if builtins.currentSystem == "x86_64-darwin" then
-      builtins.readFile ./tmux.macos.conf
+      builtins.readFile ../../tmux.macos.conf
       else
-      builtins.readFile ./tmux.unix.conf}
+      builtins.readFile ../../tmux.unix.conf}
     '';
 
     secureSocket = builtins.currentSystem != "x86_64-darwin";

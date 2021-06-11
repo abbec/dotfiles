@@ -31,7 +31,7 @@
   (straight-use-package 'use-package))
 
 ;; Visual stuff
-(set-frame-font "Spleen 8x16 16" nil t)
+(set-frame-font "Spleen 8x16-11:antialias=false" nil t)
 
 (setq-default column-number-mode t)
 
