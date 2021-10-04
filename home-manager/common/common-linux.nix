@@ -13,12 +13,20 @@
     fixedsys-excelsior
     albert
     spleen
+    spotify-tui
   ];
 
   services.gpg-agent = {
     enable = true;
     defaultCacheTtl = 1800;
     enableSshSupport = true;
+  };
+
+  services.emacs = {
+    enable = true;
+    client = {
+      enable = true;
+    };
   };
 
   programs.firefox.enable = true;
@@ -33,5 +41,22 @@
         fc-cache -f -v
       '';
     };
+  };
+
+  services.spotifyd = {
+    enable = true;
+    package = (pkgs.spotifyd.override { withKeyring = true; withPulseAudio = true; });
+    settings = {
+      global = {
+        username = "abbe_c";
+        use_keyring = true;
+        device_name = "ultramagnus";
+        bitrate = 320;
+      };
+    };
+  };
+
+  services.dropbox = {
+    enable = true;
   };
 }

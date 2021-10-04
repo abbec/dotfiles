@@ -15,4 +15,6 @@
   # do this to get gnome to discover nix-installed apps
   targets.genericLinux.enable = true;
   programs.bash.enable = true;
+
+  services.spotifyd.settings.global.device_name = "ultramagnus";
 }

@@ -11,6 +11,7 @@
     gitAndTools.delta
     zulip
     glances
+    dropbox-cli
     perlPackages.NetSMTPSSL # needed for git-send-email
     (import <toolbelt> {})
   ];
@@ -35,7 +36,7 @@
 
   programs.direnv = {
     enable = true;
-    enableNixDirenvIntegration = true;
+    nix-direnv.enable = true;
   };
 
   programs.zsh = {
@@ -125,7 +126,21 @@
       pull = {
         rebase = true;
       };
+
+      github.user = "abbec";
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/code/gbk/";
+        contents = {
+          user = {
+            name = "Albert Cervin";
+            email = "albert.cervin@goodbyekansas.com";
+          };
+        };
+      }
+    ];
   };
 
   programs.fzf = rec {

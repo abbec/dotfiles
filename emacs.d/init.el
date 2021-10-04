@@ -5,7 +5,8 @@
 
 ;; global stuff
 (tool-bar-mode -1)
-(toggle-scroll-bar -1)
+;; currently breaks doom-modeline with emacsclient
+;; (scroll-bar-mode -1)
 (global-display-line-numbers-mode)
 (setq backup-directory-alist `(("." . "~/.saves")))
 
@@ -31,18 +32,28 @@
   (straight-use-package 'use-package))
 
 ;; Visual stuff
-(set-frame-font "Spleen 8x16-11:antialias=false" nil t)
+(add-to-list 'default-frame-alist
+             '(font . "Spleen 8x16-12:antialias=false"))
+(set-frame-font "Spleen 8x16-12:antialias=false" nil t)
 
 (setq-default column-number-mode t)
 
 ;; Emoji: 😄, 🤦, 🏴󠁧󠁢󠁳󠁣󠁴󠁿
-(setq-default use-default-font-for-symbols nil)
-(set-fontset-font t 'symbol "Apple Color Emoji")
-(set-fontset-font t 'symbol "Twitter Color Emoji" nil 'append)
-(set-fontset-font t 'symbol "Twemoji" nil 'append)
-(set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
-(set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-(set-fontset-font t 'symbol "Symbola" nil 'append)
+(defun init/set-emoji-font ()
+  "Enable colorful emojis."
+  (setq-default use-default-font-for-symbols nil)
+  (set-fontset-font t 'symbol "Apple Color Emoji")
+  (set-fontset-font t 'symbol "Twitter Color Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Twemoji" nil 'append)
+  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
+  (set-fontset-font t 'symbol "Symbola" nil 'append))
+
+(if (daemonp)
+    (add-hook 'server-after-make-frame-hook
+              (lambda ()
+                (init/set-emoji-font)))
+  (init/set-emoji-font))
 
 (use-package doom-themes
   :straight t
@@ -58,7 +69,9 @@
 
 (use-package doom-modeline
   :straight t
-  :hook (after-init . doom-modeline-mode))
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-icon t))
 
 (use-package treemacs
   :straight t
@@ -69,6 +82,7 @@
   :straight t
   :commands dashboard-setup-startup-hook
   :init
+  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-set-file-icons t)
@@ -127,6 +141,7 @@
 ;; some sane line length defaults
 (setq-default fill-column 90)
 (setq-default auto-fill-function 'do-auto-fill)
+(setq-default comment-auto-fill-only-comments t)
 
 (use-package direnv
   :straight t
@@ -204,7 +219,16 @@
   (global-auto-revert-mode t))
 
 (use-package magit
-  :straight t)
+  :straight t
+  :functions git-commit-turn-on-auto-fill
+  :config
+  (setq git-commit-summary-max-length 50)
+  :hook
+  (git-commit-mode
+   .
+   (lambda ()
+     (setq fill-column 72)
+     )))
 
 (use-package forge
   :straight t

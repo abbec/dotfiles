@@ -17,7 +17,6 @@
   (add-hook 'python-mode-hook #'lsp)
   (add-hook 'python-mode-hook
             (lambda ()
-              (message "asdasd")
               (lsp-workspace-folders-add
                (locate-dominating-file default-directory "setup.py")))))
 

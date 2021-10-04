@@ -7,9 +7,13 @@
 (use-package rust-mode
    :mode "\\.rs\\'"
    :straight t
-   :hook (rust-mode . lsp)
+   :init
+   (add-hook 'rust-mode-hook #'lsp)
+   (add-hook 'rust-mode-hook
+             (lambda ()
+               (lsp-workspace-folders-add
+                (locate-dominating-file default-directory "Cargo.toml"))))
    :config
-
    ;; new and shiny it is
    (setq lsp-rust-server 'rust-analyzer)
 
