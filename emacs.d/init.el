@@ -5,8 +5,7 @@
 
 ;; global stuff
 (tool-bar-mode -1)
-;; currently breaks doom-modeline with emacsclient
-;; (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (global-display-line-numbers-mode)
 (setq backup-directory-alist `(("." . "~/.saves")))
 
@@ -57,26 +56,19 @@
 
 (use-package doom-themes
   :straight t
-  :functions doom-themes-treemacs-config doom-themes-org-config
+  :functions doom-themes-org-config
   :config
+  (setq doom-themes-padded-modeline t)
   (load-theme 'doom-one t)
-
-  (setq-default doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
-  ; (doom-themes-treemacs-config)
 
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(use-package doom-modeline
-  :straight t
-  :hook (after-init . doom-modeline-mode)
-  :config
-  (setq doom-modeline-icon t))
+(use-package diminish
+  :straight t)
 
-(use-package treemacs
-  :straight t
-  :bind (:map global-map
-         ("C-x t t" . treemacs)))
+(use-package all-the-icons
+  :straight t)
 
 (use-package dashboard
   :straight t
@@ -87,7 +79,7 @@
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-navigator t)
-  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-projects-backend 'project-el)
   (setq dashboard-items '((recents  . 5)
                           (bookmarks . 5)
                           (projects . 5)
@@ -97,26 +89,28 @@
 (use-package which-key
   :straight t
   :commands which-key-mode
+  :diminish which-key-mode
   :init
   (which-key-mode))
 
-(use-package helm
-  :straight t
-  :demand t
-  :functions helm-mode
-  :bind (("M-x" . helm-M-x)
-         ("M-y" . helm-show-kill-ring)
-         ("C-x C-f" . helm-find-files)
-         ("M-s o" . helm-occur))
-  :config
-  (helm-mode 1))
+(use-package dired-x
+  :bind (("C-x C-j" . dired-jump)
+         ("C-x 4 C-j" . dired-jump-other-window)))
 
-(use-package projectile
-  :straight t
-  :commands projectile-mode
-  :bind-keymap ("C-c p" . projectile-command-map)
+;; colors in compilation buffer
+(use-package ansi-color
   :config
-  (projectile-mode))
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  (setq-default compilation-environment '("TERM=xterm-256color"))
+  :hook (compilation-filter . my-colorize-compilation-buffer))
+
+;; icomplete and fido 🐩
+(use-package icomplete
+  :init
+  (icomplete-mode)
+  (fido-mode))
 
 (use-package ace-window
   :straight t
@@ -142,49 +136,59 @@
 (setq-default fill-column 90)
 (setq-default auto-fill-function 'do-auto-fill)
 (setq-default comment-auto-fill-only-comments t)
-
-(use-package direnv
-  :straight t
-  :commands (direnv-mode direnv-update-environment)
-  :init
-  ;; make sure direnv gets to run
-  (advice-add 'lsp :before #'direnv-update-environment)
-  :config
-  (setq direnv-always-show-summary nil)
-  (direnv-mode))
-
-(use-package flycheck
-  :straight t
-  :commands global-flycheck-mode
-  :init (global-flycheck-mode))
+(diminish 'auto-fill-function)
 
 (use-package company
   :straight t
+  :diminish company-mode
   :commands global-company-mode
   :init (global-company-mode))
 
-(use-package lsp-mode
- :straight t
- :hook (lsp-mode . lsp-enable-which-key-integration)
- :commands lsp
- :config
- (setq lsp-signature-render-documentation nil)
- (setq lsp-idle-delay 0.500))
-
-(use-package lsp-ui
+(use-package project
   :straight t
-  :commands lsp-ui-mode)
+  :config
+  (setq project-switch-commands 'project-find-file))
 
-(use-package lsp-treemacs
- :straight t)
-
-(use-package helm-lsp
+(use-package eldoc
   :straight t
-  :commands helm-lsp-workspace-symbol)
+  :diminish eldoc-mode
+  :config
+  (setq eldoc-echo-area-use-multiline-p nil)
+  (diminish 'eldoc-mode))
+
+(use-package flymake
+  :straight t
+  :init
+  (define-prefix-command 'flymake-command-map)
+  :bind-keymap ("C-c !" . flymake-command-map)
+  :bind (:map flymake-command-map
+              ("n" . flymake-goto-next-error)
+              ("p" . flymake-goto-prev-error)
+              ("l" . flymake-show-buffer-diagnostics)
+              ("a" . flymake-show-project-diagnostics)))
+
+(use-package flymake-diagnostic-at-point
+  :after flymake
+  :straight t
+  :config
+  (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
+
+(use-package eglot
+  :straight t
+  :after direnv
+  :diminish eldoc-mode
+  :init
+  (define-prefix-command 'eglot-command-map)
+  :bind-keymap ("C-c e" . eglot-command-map)
+  :bind (:map eglot-command-map
+              ("r" . eglot-rename)
+              ("a" . eglot-code-actions)
+              ("h" . eldoc)))
 
 (use-package yasnippet
   :straight t
   :demand t
+  :diminish yas-minor-mode
   :functions yas-global-mode
   :config
   (yas-global-mode 1))
@@ -197,6 +201,7 @@
 (setq-default whitespace-style '(face spaces space-mark tabs newline))
 (global-whitespace-mode t)
 (setq-default require-final-newline t)
+(diminish 'global-whitespace-mode)
 
 (eval-when-compile
   (add-to-list 'load-path "~/.emacs.d/lang")
@@ -205,7 +210,12 @@
   (require 'lang-python)
   (require 'rust)
   (require 'racket)
-  (require 'clojure))
+  (require 'terraform)
+  (require 'protobuf)
+  (require 'clojure)
+  (require 'csharp)
+  (require 'cpp)
+  (require 'cmake))
 
 (use-package yaml-mode
   :straight t
@@ -238,7 +248,18 @@
   :straight t
   :commands elcord-mode
   :init
+  (setq elcord-quiet t)
   (elcord-mode))
+
+(use-package direnv
+  :straight t
+  :commands (direnv-mode direnv-update-environment)
+  :init
+  ;; make sure direnv gets to run
+  (add-hook 'prog-mode-hook #'direnv--maybe-update-environment)
+  (advice-add 'eglot-ensure :before #'direnv-update-environment)
+  (setq direnv-always-show-summary nil)
+  (direnv-mode))
 
 ;; installed with nix
 (use-package vterm)

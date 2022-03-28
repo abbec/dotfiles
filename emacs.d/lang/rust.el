@@ -4,35 +4,24 @@
 ;;; Code:
 (require 'use-package)
 
+;; TODO: Workspaces
+(defun find-rust-roots (dir)
+  (let ((root (locate-dominating-file dir "Cargo.toml")))
+    (and root (cons 'vc root))))
+
 (use-package rust-mode
-   :mode "\\.rs\\'"
-   :straight t
-   :init
-   (add-hook 'rust-mode-hook #'lsp)
-   (add-hook 'rust-mode-hook
-             (lambda ()
-               (lsp-workspace-folders-add
-                (locate-dominating-file default-directory "Cargo.toml"))))
-   :config
-   ;; new and shiny it is
-   (setq lsp-rust-server 'rust-analyzer)
+  :mode "\\.rs\\'"
+  :straight t
+  :config
+  (setq eglot-workspace-configuration
+        '((:rust-analyzer . (:checkOnSave (:command "clippy")))))
 
-   ;; give all the lints
-   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-   (setq lsp-rust-analyzer-cargo-watch-enable t)
-
-   ;; we want errors for everything please
-   (setq lsp-rust-analyzer-cargo-all-targets t)
-   (setq lsp-rust-all-features t)
-   (setq lsp-rust-all-targets t)
-
+  (add-hook 'project-find-functions 'find-rust-roots)
+  (add-hook 'rust-mode-hook 'eglot-ensure)
    ;; format on save
    (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
-                                            (lsp-format-buffer))))
-
-   ;; display inlay hints
-   (setq lsp-rust-analyzer-server-display-inlay-hints t)
-   (add-hook 'lsp-mode (lambda () (lsp-rust-analyzer-inlay-hints-mode))))
+                                            (eglot-format-buffer))))
+  )
 
 (use-package cargo
   :straight t

@@ -8,17 +8,24 @@
   :straight t
   :hook (python-mode . blacken-mode))
 
+(defun find-python-roots (dir)
+  (let ((root (or
+               (locate-dominating-file dir "setup.py")
+               (locate-dominating-file dir "setup.cfg"))))
+    (and root (cons 'vc root))))
+
 (use-package python
   :straight t
   :commands python-mode
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
-  :init
-  (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'python-mode-hook
-            (lambda ()
-              (lsp-workspace-folders-add
-               (locate-dominating-file default-directory "setup.py")))))
+  :hook (
+          (python-mode . eglot-ensure)
+          ;; format on save
+          (before-save . (lambda () (when (eq 'python-mode major-mode)
+                                      (eglot-format-buffer)))))
+  :config
+  (add-hook 'project-find-functions 'find-python-roots))
 
 (provide 'lang-python)
 ;;; lang-python.el ends here

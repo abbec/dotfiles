@@ -14,6 +14,7 @@
     albert
     spleen
     spotify-tui
+    wally-cli
   ];
 
   services.gpg-agent = {
