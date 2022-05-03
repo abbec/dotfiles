@@ -32,8 +32,8 @@
 
 ;; Visual stuff
 (add-to-list 'default-frame-alist
-             '(font . "Spleen 8x16-12:antialias=false"))
-(set-frame-font "Spleen 8x16-12:antialias=false" nil t)
+             '(font . "spleen:pixelsize=16:antialias=false"))
+(set-frame-font "spleen:pixelsize=16:antialias=false" nil t)
 
 (setq-default column-number-mode t)
 
@@ -101,7 +101,7 @@
 (use-package ansi-color
   :config
   (defun my-colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
+    (when (derived-mode-p 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max))))
   (setq-default compilation-environment '("TERM=xterm-256color"))
   :hook (compilation-filter . my-colorize-compilation-buffer))
@@ -148,6 +148,11 @@
   :straight t
   :config
   (setq project-switch-commands 'project-find-file))
+
+;; debugging
+(use-package gud
+  :config
+  (setq gdb-many-windows t))
 
 (use-package eldoc
   :straight t
@@ -220,6 +225,9 @@
 (use-package yaml-mode
   :straight t
   :mode ("\\.yaml\\'" "\\.yml\\'"))
+
+(use-package meson-mode
+  :straight t)
 
 (use-package autorevert
   :diminish auto-revert-mode

@@ -4,7 +4,7 @@
 ;;; Code:
 (require 'use-package)
 
-(defun find-python-roots (dir)
+(defun find-c-roots (dir)
   (let ((root (or
                (locate-dominating-file dir "Makefile")
                (locate-dominating-file dir "meson.build")

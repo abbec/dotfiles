@@ -12,15 +12,16 @@
 (use-package rust-mode
   :mode "\\.rs\\'"
   :straight t
-  :config
+  :init
   (setq eglot-workspace-configuration
         '((:rust-analyzer . (:checkOnSave (:command "clippy")))))
 
+  :config
   (add-hook 'project-find-functions 'find-rust-roots)
   (add-hook 'rust-mode-hook 'eglot-ensure)
-   ;; format on save
-   (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
-                                            (eglot-format-buffer))))
+  ;; format on save
+  (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
+                                           (eglot-format-buffer))))
   )
 
 (use-package cargo
