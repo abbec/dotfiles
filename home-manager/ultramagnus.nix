@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [ ./common/common-linux.nix ];
 
@@ -16,5 +16,12 @@
   targets.genericLinux.enable = true;
   programs.bash.enable = true;
 
+  systemd.user.sessionVariables = {
+    NIX_PATH = lib.mkForce "";
+  };
+
   services.spotifyd.settings.global.device_name = "ultramagnus";
+
+  home.homeDirectory = "/home/abbe";
+  home.username = "abbe";
 }

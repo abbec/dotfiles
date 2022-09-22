@@ -9,16 +9,19 @@
   (let ((root (locate-dominating-file dir "Cargo.toml")))
     (and root (cons 'vc root))))
 
+(defun rust-mode-setup ()
+  (setq eglot-workspace-configuration
+        '((:rust-analyzer . (:checkOnSave (:command "clippy")))))
+  (eglot-ensure))
+
 (use-package rust-mode
   :mode "\\.rs\\'"
   :straight t
   :init
-  (setq eglot-workspace-configuration
-        '((:rust-analyzer . (:checkOnSave (:command "clippy")))))
+  (add-hook 'project-find-functions 'find-rust-roots)
 
   :config
-  (add-hook 'project-find-functions 'find-rust-roots)
-  (add-hook 'rust-mode-hook 'eglot-ensure)
+  (add-hook 'rust-mode-hook 'rust-mode-setup)
   ;; format on save
   (add-hook 'before-save-hook (lambda () (when (eq 'rust-mode major-mode)
                                            (eglot-format-buffer))))

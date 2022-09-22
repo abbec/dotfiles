@@ -20,11 +20,11 @@
   :mode ("\\.py\\'" . python-mode)
   :interpreter ("python" . python-mode)
   :hook (
-          (python-mode . eglot-ensure)
-          ;; format on save
-          (before-save . (lambda () (when (eq 'python-mode major-mode)
-                                      (eglot-format-buffer)))))
-  :config
+         (python-mode . eglot-ensure)
+         ;; format on save
+         (before-save . (lambda () (when (eq 'python-mode major-mode)
+                                     (eglot-format-buffer)))))
+  :init
   (add-hook 'project-find-functions 'find-python-roots))
 
 (provide 'lang-python)

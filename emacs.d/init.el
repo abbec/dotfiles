@@ -41,18 +41,24 @@
 (defun init/set-emoji-font ()
   "Enable colorful emojis."
   (setq-default use-default-font-for-symbols nil)
-  (set-fontset-font t 'symbol "Apple Color Emoji")
-  (set-fontset-font t 'symbol "Twitter Color Emoji" nil 'append)
-  (set-fontset-font t 'symbol "Twemoji" nil 'append)
-  (set-fontset-font t 'symbol "Noto Color Emoji" nil 'append)
-  (set-fontset-font t 'symbol "Segoe UI Emoji" nil 'append)
-  (set-fontset-font t 'symbol "Symbola" nil 'append))
+  (set-fontset-font t 'emoji "Apple Color Emoji")
+  (set-fontset-font t 'emoji "Twitter Color Emoji" nil 'append)
+  (set-fontset-font t 'emoji "Twemoji" nil 'append)
+  (set-fontset-font t 'emoji "Noto Color Emoji" nil 'append)
+  (set-fontset-font t 'emoji "Segoe UI Emoji" nil 'append)
+  (set-fontset-font t 'emoji "Symbola" nil 'append))
 
 (if (daemonp)
     (add-hook 'server-after-make-frame-hook
-              (lambda ()
-                (init/set-emoji-font)))
+              'init/set-emoji-font)
   (init/set-emoji-font))
+
+;; email sending
+(setq user-mail-address "albert@acervin.com"
+      user-full-name "Albert Cervin"
+      smtpmail-smtp-server "smtp.googlemail.com"
+      smtpmail-smtp-service 587
+      send-mail-function 'smtpmail-send-it)
 
 (use-package doom-themes
   :straight t
@@ -70,28 +76,16 @@
 (use-package all-the-icons
   :straight t)
 
-(use-package dashboard
-  :straight t
-  :commands dashboard-setup-startup-hook
-  :init
-  (setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-startup-banner 'logo)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-navigator t)
-  (setq dashboard-projects-backend 'project-el)
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5)
-                          (agenda . 5)))
-  (dashboard-setup-startup-hook))
-
 (use-package which-key
   :straight t
   :commands which-key-mode
   :diminish which-key-mode
   :init
-  (which-key-mode))
+  ;; this little workaround for emacsclient is for
+  ;; https://github.com/justbur/emacs-which-key/issues/306
+  (if (daemonp)
+    (add-hook 'server-after-make-frame-hook 'which-key-mode)
+    (which-key-mode)))
 
 (use-package dired-x
   :bind (("C-x C-j" . dired-jump)
@@ -110,11 +104,7 @@
 (use-package icomplete
   :init
   (icomplete-mode)
-  (fido-mode))
-
-(use-package ace-window
-  :straight t
-  :bind ("M-o" . ace-window))
+  (fido-vertical-mode))
 
 ;; as it turns out, we are not insane
 (prefer-coding-system 'utf-8)
@@ -129,7 +119,7 @@
   :commands (exec-path-from-shell-initialize)
   :init
   (setq exec-path-from-shell-arguments nil)
-  (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH" "SHELL" "NIX_PATH"))
+  (setq exec-path-from-shell-variables '("SSH_AUTH_SOCK" "PATH" "SHELL"))
   (exec-path-from-shell-initialize))
 
 ;; some sane line length defaults
@@ -137,6 +127,8 @@
 (setq-default auto-fill-function 'do-auto-fill)
 (setq-default comment-auto-fill-only-comments t)
 (diminish 'auto-fill-function)
+
+(add-hook 'prog-mode-hook #'flyspell-prog-mode)
 
 (use-package company
   :straight t
@@ -188,11 +180,22 @@
   :bind (:map eglot-command-map
               ("r" . eglot-rename)
               ("a" . eglot-code-actions)
-              ("h" . eldoc)))
+              ("h" . eldoc))
+  :config
+  (let ((cache
+         (expand-file-name (md5 (project-root (eglot--current-project)))
+                           (locate-user-emacs-file
+                            "eglot-eclipse-jdt-cache"))))
+    (add-to-list 'eglot-server-programs
+                 `(java-mode "jdtls" "-data" ,cache))))
+
+(use-package yasnippet-snippets
+  :straight t)
 
 (use-package yasnippet
   :straight t
   :demand t
+  :after yasnippet-snippets
   :diminish yas-minor-mode
   :functions yas-global-mode
   :config
@@ -220,7 +223,8 @@
   (require 'clojure)
   (require 'csharp)
   (require 'cpp)
-  (require 'cmake))
+  (require 'cmake)
+  (require 'java))
 
 (use-package yaml-mode
   :straight t
@@ -228,6 +232,13 @@
 
 (use-package meson-mode
   :straight t)
+
+(use-package graphviz-dot-mode
+  :straight t
+  :config
+  (setq graphviz-dot-indent-width 4))
+
+(use-package company-graphviz-dot)
 
 (use-package autorevert
   :diminish auto-revert-mode

@@ -1,4 +1,4 @@
-{ config, pkgs , ... }:
+{ config, pkgs, ... }:
 {
   home.packages = with pkgs; [
     fira-code
@@ -13,13 +13,16 @@
     glances
     dropbox-cli
     perlPackages.NetSMTPSSL # needed for git-send-email
-    (import <toolbelt> {})
+    rnix-lsp
+    (import <toolbelt> { })
   ];
 
   home.keyboard = {
     layout = "se";
     options = "terminate:ctrl_alt_bksp, caps:escape, nodeadkeys";
   };
+
+  home.stateVersion = "22.05";
 
   programs.starship = {
     enable = true;
@@ -29,6 +32,7 @@
 
   programs.emacs = {
     enable = true;
+    package = pkgs.emacs-gtk;
     extraPackages = epkgs: [
       epkgs.vterm
     ];
@@ -77,10 +81,41 @@
 
   };
 
+  accounts.email.accounts = {
+    private = {
+      realName = "Albert Cervin";
+      address = "albert@acervin.com";
+      flavor = "gmail.com";
+      primary = true;
+      msmtp.enable = true;
+      mbsync = {
+        enable = true;
+        create = "both";
+        subFolders = "Maildir++";
+        extraConfig.account = {
+          PipelineDepth = 1;
+        };
+      };
+      passwordCommand = "secret-tool lookup service smtp user albert@acervin.com";
+    };
+
+    work = {
+      realName = "Albert Cervin";
+      address = "albert.cervin@goodbyekansas.com";
+      flavor = "gmail.com";
+      msmtp.enable = true;
+    };
+  };
+
+  programs.msmtp.enable = true;
+  services.mbsync.enable = true;
+  programs.mbsync.enable = true;
+
   programs.git = {
     enable = true;
     userName = "Albert Cervin";
     userEmail = "albert@acervin.com";
+    package = pkgs.gitAndTools.gitFull;
     signing = {
       key = "8EC09E34A35E8D55";
       signByDefault = true;
@@ -118,10 +153,9 @@
     extraConfig = {
       sendemail = {
         from = "Albert Cervin <albert@acervin.com>";
-        smtpserver = "smtp.gmail.com";
-        smtpuser = "albert@acervin.com";
-        smtpencryption = "tls";
-        smtpserverport = "587";
+
+        # let msmtp use the from address to determine account
+        envelopesender = "auto";
       };
       pull = {
         rebase = true;
@@ -138,6 +172,10 @@
             name = "Albert Cervin";
             email = "albert.cervin@goodbyekansas.com";
           };
+
+          sendemail = {
+            from = "Albert Cervin <albert.cervin@goodbyekansas.com>";
+          };
         };
       }
     ];
@@ -148,45 +186,6 @@
     enableZshIntegration = true;
     defaultCommand = "rg --files";
     fileWidgetCommand = defaultCommand;
-  };
-
-  # editors
-  programs.neovim = {
-    enable = true;
-    extraConfig = ''
-      " main config
-      ${builtins.readFile ../../neovim.vim}
-      " coc config
-      ${builtins.readFile ../../coc-config.vim}
-    '';
-
-    plugins = with pkgs.vimPlugins;
-      let
-        customPlugins = {
-          rainbow = pkgs.vimUtils.buildVimPlugin {
-            name = "rainbow";
-            src = pkgs.fetchFromGitHub {
-              owner = "junegunn";
-              repo = "rainbow_parentheses.vim";
-              rev = "27e7cd73fec9d1162169180399ff8ea9fa28b003";
-              sha256 = "0izbjq6qbia013vmd84rdwjmwagln948jh9labhly0asnhqyrkb8";
-            };
-          };
-        };
-      in
-        [
-          fugitive
-          fzf-vim
-          base16-vim
-          coc-nvim
-          customPlugins.rainbow
-
-          # language support
-          vim-nix
-          vim-protobuf
-          vim-toml
-          vim-jinja
-        ];
   };
 
   home.file = {
